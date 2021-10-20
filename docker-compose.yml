@@ -1,0 +1,22 @@
+version: '3.0' # Docker-compose version number
+
+# Define the containers to be run
+services:
+  angular:
+    build: client
+    ports:
+      - "4200:4200"
+    container_name: "client"
+
+  express:
+    build: server
+    ports:
+      - "3000:3000"
+    links:
+      - database
+    container_name: "server"
+
+  database:
+    image: mongo # Pull the latest mongo docker image
+    ports:
+      - "27017:27017"

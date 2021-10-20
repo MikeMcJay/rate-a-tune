@@ -1,0 +1,18 @@
+{
+  "name": "rate-a-tune",
+  "version": "1.0.0",
+  "description": "A service where users can rate/review Spotify music.",
+  "main": "client/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node client/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikeMcJay/rate-a-tune.git"
+  },
+  "author": "Jason McNeill",
+  "bugs": {
+    "url": "https://github.com/MikeMcJay/rate-a-tune/issues"
+  }
+}
