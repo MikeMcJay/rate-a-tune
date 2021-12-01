@@ -1,0 +1,9 @@
+{
+  "/api/server/*": {
+    "target": "http://[::1]:3000",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/api/spotify": {}
+}
