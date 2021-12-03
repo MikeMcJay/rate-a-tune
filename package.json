@@ -2,10 +2,9 @@
   "name": "rate-a-tune",
   "version": "1.0.0",
   "description": "A service where users can rate/review Spotify music.",
-  "main": "client/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node client/index.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",

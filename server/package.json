@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -9,5 +9,10 @@
   },
   "devDependencies": {
     "cors": "^2.8.5"
-  }
+  },
+  "serverIPAddress": "localhost",
+  "serverPort": "3000",
+  "mongoIPAddress": "localhost",
+  "mongoDockerName": "database",
+  "mongoPort": "27017"
 }
