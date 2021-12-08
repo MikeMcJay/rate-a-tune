@@ -7,12 +7,16 @@ services:
     ports:
       - "4200:4200"
     container_name: "client"
+    # Tag our image with the current build version
+    image: "mikemcjay/rate-a-tune-client:1.1.0"
 
   express:
     build: server
     ports:
       - "3000:3000"
     container_name: "server"
+    # Tag our image with the current build version
+    image: "mikemcjay/rate-a-tune-server:1.1.0"
 
   database:
     image: mongo # Pull the latest mongo docker image
