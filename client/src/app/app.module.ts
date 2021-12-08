@@ -7,6 +7,8 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import {HomeModule} from "./home/home.module";
 
+import { FormsModule } from '@angular/forms'
+
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
@@ -18,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     RouterModule,
     HomeModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -33,7 +33,7 @@ function connectToMongo() {
         db.on('error', console.error.bind(console, 'Error connecting the server to the mongo database.'));
         db.once('open', function() {
             console.log("**********");
-            console.log('The server is connected to the mongo database.');
+            console.log('The server is connected to the mongo database: ' + mongoDatabase);
             console.log("**********");
         });
 

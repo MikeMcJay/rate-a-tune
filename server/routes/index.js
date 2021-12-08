@@ -2,10 +2,41 @@ const express = require('express');
 let { Example } = require('../models/example');
 
 exports = module.exports = function(app) {
-    // app.get('/hello', (req, res) => res.json({ username: 'MikeMcJay' }));
-    app.get('/hello', async (req, res, next) => {
-        const example = await Example.find();
-        res.send(example);
-        // res.render('index', { example: example })
+    app.get('/read', async (req, res) => {
+        const read = await Example.find();
+        try {
+            res.json(read);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+
+    app.post('/create', async (req, res) => {
+        const create = new Example(req.body);
+        try {
+            await create.save();
+            res.send(create);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+
+    app.patch('/update/:id', async (req, res) => {
+        try {
+            await Example.findByIdAndUpdate(
+                { _id: req.params.id }, req.body);
+            console.log('Values updated');
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+
+    app.delete('/delete/:id', async (req, res) => {
+        try {
+            const del = await Example.findByIdAndDelete({ _id: req.params.id });
+            if (!del) res.status(404).send('No item found');
+        } catch (error) {
+            res.status(500).send(error);
+        }
     });
 }
