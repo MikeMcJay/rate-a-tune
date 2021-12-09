@@ -31,23 +31,32 @@ function connectToMongo() {
         // allocated port and the database we are trying to connect to
         const mongoDatabase = 'test';
         mongoose.connect('mongodb://' + JSON.parse(packageData).mongoDockerName + ':' + JSON.parse(packageData).mongoPort +
-            '/' + mongoDatabase, { useNewUrlParser: true });
+            '/' + mongoDatabase, { useNewUrlParser: true }, function (error) {
+            if (error) {
+                return error;
+            }
+        });
+    }).catch((error) => {
+        return error;
+    });
+    return packageFile;
+}
 
+function connect() {
+    const packageFile = connectToMongo();
+    packageFile.then(packageData => {
         let db = mongoose.connection;
-        db.on('error', console.error.bind(console, 'Error connecting the server to the mongo database.'));
         db.once('open', function() {
             console.log("**********");
-            console.log('The server is connected to the mongo database: ' + mongoDatabase);
+            console.log('The server is connected to the mongo database');
             console.log("**********");
         });
-
         app.listen(JSON.parse(packageData).serverPort, () => console.log('Server is online at: ' +
             JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort));
-
-    }).catch((error) => {
+    }).catch(error => {
         console.log("**********");
         console.log('Error: ' + error);
         console.log("**********");
-    });
+    })
 }
-connectToMongo();
+connect();
