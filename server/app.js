@@ -19,14 +19,14 @@ crud.read(app);
 crud.create(app);
 crud.delete(app);
 
-async function acquirePackageFile(fileLocation, encoding) {
+async function acquirePackagePromise(fileLocation, encoding) {
     // Return a promise of whether the package file could be read or not
     return fs.promises.readFile(fileLocation, encoding);
 }
 
 function connectToMongo() {
-    const packageFile = acquirePackageFile('./package.json', 'utf8');
-    packageFile.then((packageData) => {
+    const packagePromise = acquirePackagePromise('./package.json', 'utf8');
+    packagePromise.then((packageData) => {
         // Parse the JSON package file for server, extracting the name assigned to the mongo docker container, its
         // allocated port and the database we are trying to connect to
         const mongoDatabase = 'test';
@@ -39,12 +39,12 @@ function connectToMongo() {
     }).catch((error) => {
         return error;
     });
-    return packageFile;
+    return packagePromise;
 }
 
 function connect() {
-    const packageFile = connectToMongo();
-    packageFile.then(packageData => {
+    const packagePromise = connectToMongo();
+    packagePromise.then(packageData => {
         let db = mongoose.connection;
         db.once('open', function() {
             console.log("**********");
@@ -61,6 +61,6 @@ function connect() {
 }
 connect();
 
-module.exports.acquirePackageFile = acquirePackageFile;
+module.exports.acquirePackagePromise = acquirePackagePromise;
 module.exports.connectToMongo = connectToMongo;
 module.exports.connect = connect;
