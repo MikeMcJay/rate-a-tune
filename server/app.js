@@ -19,13 +19,13 @@ crud.read(app);
 crud.create(app);
 crud.delete(app);
 
-async function acquirePackageFile() {
+async function acquirePackageFile(fileLocation, encoding) {
     // Return a promise of whether the package file could be read or not
-    return fs.promises.readFile('./package.json', 'utf8');
+    return fs.promises.readFile(fileLocation, encoding);
 }
 
 function connectToMongo() {
-    const packageFile = acquirePackageFile();
+    const packageFile = acquirePackageFile('./package.json', 'utf8');
     packageFile.then((packageData) => {
         // Parse the JSON package file for server, extracting the name assigned to the mongo docker container, its
         // allocated port and the database we are trying to connect to
