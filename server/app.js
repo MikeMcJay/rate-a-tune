@@ -30,7 +30,7 @@ function connectToMongo() {
         // Parse the JSON package file for server, extracting the name assigned to the mongo docker container, its
         // allocated port and the database we are trying to connect to
         const mongoDatabase = 'test';
-        mongoose.connect('mongodb://' + JSON.parse(packageData).mongoDockerName + ':' + JSON.parse(packageData).mongoPort +
+        mongoose.connect('mongodb://' + JSON.parse(packageData) + ':' + JSON.parse(packageData).mongoPort +
             '/' + mongoDatabase, { useNewUrlParser: true }, function (error) {
             if (error) {
                 return error;
