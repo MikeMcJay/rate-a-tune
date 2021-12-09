@@ -13,7 +13,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Enable Cross Origin for passing data
 app.use(cors({origin: true}));
 
-require('./routes')(app);
+const crud = require('./routes/index');
+crud.update(app);
+crud.read(app);
+crud.create(app);
+crud.delete(app);
 
 async function acquirePackageFile() {
     // Return a promise of whether the package file could be read or not
