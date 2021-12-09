@@ -1,14 +1,6 @@
 const app = require('../app');
 
 let assert = require('assert');
-describe('Array', function() {
-    describe('#indexOf()', function() {
-        it('should return -1 when the value is not present', function() {
-            assert.equal([1, 2, 3].indexOf(4), -1);
-        });
-    });
-});
-
 describe('CRUD', function () {
     describe('# Retrieving JSON Package', function () {
         it("should return the server's json package", async function() {
@@ -19,4 +11,15 @@ describe('CRUD', function () {
             });
         });
     });
+
+    describe('# Connecting to MongoDB', function () {
+        it('should attempt to connect without error', async function() {
+            app.connectToMongo().then(() => {
+                done();
+            }).catch((error) => {
+                done(error);
+            });
+        });
+    })
+
 });
