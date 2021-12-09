@@ -60,3 +60,7 @@ function connect() {
     })
 }
 connect();
+
+module.exports.acquirePackageFile = acquirePackageFile;
+module.exports.connectToMongo = connectToMongo;
+module.exports.connect = connect;

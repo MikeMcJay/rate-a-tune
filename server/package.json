@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "test": "lab --assert code --leaks --coverage",
     "start": "node app.js"
   },
   "dependencies": {
