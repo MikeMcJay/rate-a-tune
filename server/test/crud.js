@@ -4,12 +4,11 @@ const app = require('../app');
 // const lab = exports.lab = Lab.script();
 //
 
-console.log('##############');
-console.log('TEST OUTPUT');
-console.log('##############');
-
-// lab.experiment('math', () => {
-//     lab.test('returns true when 1 + 1 equals 2', () => {
-//         expect(1 + 1).to.equal(2);
-//     });
-// });
+let assert = require('assert');
+describe('Array', function() {
+    describe('#indexOf()', function() {
+        it('should return -1 when the value is not present', function() {
+            assert.equal([1, 2, 3].indexOf(4), -1);
+        });
+    });
+});
