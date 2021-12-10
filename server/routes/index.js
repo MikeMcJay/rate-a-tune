@@ -1,4 +1,5 @@
-const express = require('express');
+// const express = require('express');
+// app = express();
 let { Example } = require('../models/example');
 
 // module.exports = function crud(app) {

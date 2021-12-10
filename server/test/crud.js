@@ -1,35 +1,70 @@
 const fs = require('fs');
 
-const app = require('../app');
+const serverConfig = require('../app');
+const express = require('express');
+const app = express();
+
+const index = require('../routes/index');
 
 let assert = require('assert');
-describe('CRUD', function () {
+describe('Database Testing', function () {
+    describe('JSON Package Retrieval and Database Connection', function () {
+        let packageData;
 
-    let packageData;
-
-    beforeEach(function() {
-        let packagePromise = fs.promises.readFile('package.json', 'utf8');
-        packagePromise.then((jsonPackage) => {
-            packageData = jsonPackage;
-        });
-    });
-
-    describe('# Retrieving JSON Package', function () {
-        it("should return the server's json package", async function() {
-            app.acquirePackagePromise('package.json', 'utf8').then((testPackageData) => {
-                assert.equal(packageData, testPackageData);
+        beforeEach(function() {
+            // Acquire the json package with information about the server location
+            let packagePromise = fs.promises.readFile('package.json', 'utf8');
+            packagePromise.then((jsonPackage) => {
+                packageData = jsonPackage;
             });
         });
-    });
 
-    describe('# Connecting to MongoDB', function () {
-        it('should attempt to connect without error', async function() {
-            app.connectToMongo().then((testPackagePromise) => {
-                testPackagePromise.then((testPackageData) => {
+        describe('# Retrieving JSON Package', function () {
+            it("should return the server's json package", async function() {
+                serverConfig.acquirePackagePromise('package.json', 'utf8').then((testPackageData) => {
                     assert.equal(packageData, testPackageData);
                 });
             });
         });
-    })
 
+        describe('# Connecting to MongoDB', function () {
+            it('should attempt to connect without error', async function() {
+                serverConfig.connectToMongo().then((testPackagePromise) => {
+                    testPackagePromise.then((testPackageData) => {
+                        assert.equal(packageData, testPackageData);
+                    });
+                });
+            });
+        })
+    });
+
+    describe('CRUD Functionality', function () {
+        function addData(postData){
+            let packagePromise = fs.promises.readFile('package.json', 'utf8');
+            var request = require('request');
+            packagePromise.then((packageData) => {
+                let clientServerOptions = {
+                    uri: 'http://'+ JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort
+                        + '/' + 'create',
+                    body: JSON.stringify(postData),
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+                request(clientServerOptions, function (error, response) {
+                    console.log(error,response.body);
+                });
+            });
+        }
+
+        describe('# Creates a new item', function () {
+            it("should have a route that allows for new data creation", async function() {
+                // Create the backend create route
+                index.create(app)
+                // See if content can be posted to the url
+                addData({username: "testUsername", name: "testName"});
+            });
+        });
+    });
 });
