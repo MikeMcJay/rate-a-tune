@@ -51,16 +51,24 @@ function connect() {
             console.log('The server is connected to the mongo database');
             console.log("**********");
         });
-        app.listen(JSON.parse(packageData).serverPort, () => console.log('Server is online at: ' +
-            JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort));
+        // If the server is already listening to the specified port ignore
+        if (!app.listen()) {
+            app.listen(JSON.parse(packageData).serverPort, () => console.log('Server is online at: ' +
+                JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort));
+        }
     }).catch(error => {
         console.log("**********");
         console.log('Error: ' + error);
         console.log("**********");
     })
 }
-connect();
+// connect();
+
+function disconnectFromMongoose() {
+    mongoose.connection.close();
+}
 
 module.exports.acquirePackagePromise = acquirePackagePromise;
 module.exports.connectToMongo = connectToMongo;
 module.exports.connect = connect;
+module.exports.disconnect = disconnectFromMongoose;

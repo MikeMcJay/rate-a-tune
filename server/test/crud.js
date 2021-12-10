@@ -35,14 +35,19 @@ describe('Database Testing', function () {
                     });
                 });
             });
-        })
+        });
+
+        after(function() {
+            // Disconnect from the mongo database
+            serverConfig.disconnect();
+        });
     });
 
     describe('CRUD Functionality', function () {
         function addData(postData){
             let packagePromise = fs.promises.readFile('package.json', 'utf8');
-            var request = require('request');
             packagePromise.then((packageData) => {
+                var request = require('request');
                 let clientServerOptions = {
                     uri: 'http://'+ JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort
                         + '/' + 'create',
@@ -61,9 +66,11 @@ describe('Database Testing', function () {
         describe('# Creates a new item', function () {
             it("should have a route that allows for new data creation", async function() {
                 // Create the backend create route
-                index.create(app)
+                index.create(app);
+                // Connect to the mongo database
+                serverConfig.connect();
                 // See if content can be posted to the url
-                addData({username: "testUsername", name: "testName"});
+                addData({"username": "testUsername", "name": "testName"});
             });
         });
     });
