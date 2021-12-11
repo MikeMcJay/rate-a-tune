@@ -1,5 +1,3 @@
-// const express = require('express');
-// app = express();
 let { Example } = require('../models/example');
 
 exports.read = (app) => {

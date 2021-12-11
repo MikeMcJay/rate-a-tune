@@ -11,7 +11,8 @@
     "supertest": "^6.1.6"
   },
   "devDependencies": {
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "request": "^2.88.2"
   },
   "serverIPAddress": "localhost",
   "serverPort": "3000",

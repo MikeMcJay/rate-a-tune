@@ -18,6 +18,8 @@ crud.update(app);
 crud.read(app);
 crud.create(app);
 crud.delete(app);
+const browse = require('./routes/spotify/browse');
+browse.browseSong(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

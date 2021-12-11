@@ -5,7 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { RouterModule } from '@angular/router';
-import {HomeModule} from "./home/home.module";
+import { HomeModule } from "./home/home.module";
+import { BrowseModule } from "./browse/browse.module";
 
 import { FormsModule } from '@angular/forms'
 
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     RouterModule,
     HomeModule,
+    BrowseModule,
     HttpClientModule,
     FormsModule
   ],
