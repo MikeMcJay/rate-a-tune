@@ -2,17 +2,16 @@
 // app = express();
 let { Example } = require('../models/example');
 
-// module.exports = function crud(app) {
 exports.read = (app) => {
-        app.get('/read', async (req, res) => {
-            const read = await Example.find();
-            try {
-                res.json(read);
-            } catch (error) {
-                res.status(500).send(error);
-            }
-        });
-    }
+    app.get('/read', async (req, res) => {
+        const read = await Example.find();
+        try {
+            res.json(read);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+}
 
 exports.create = (app) => {
     app.post('/create', async (req, res) => {
@@ -20,7 +19,6 @@ exports.create = (app) => {
         try {
             await create.save();
             res.send(create);
-            // res.send({"hey": "there"})
         } catch (error) {
             res.status(500).send(error);
         }
@@ -49,4 +47,3 @@ exports.delete = (app) => {
         }
     });
 }
-// }

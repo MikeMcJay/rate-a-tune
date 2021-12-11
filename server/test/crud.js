@@ -46,12 +46,21 @@ describe('Database Testing', function () {
     });
 
     describe('CRUD Functionality', function () {
+
+        beforeEach(function () {
+            // Connect to the mongo database
+            serverConfig.connect();
+        })
+
+        afterEach(function() {
+            // Disconnect from the mongo database
+            serverConfig.disconnect();
+        })
+
         describe('# Creates a new item', function () {
             it("should have a route that allows for new data creation", function() {
                 // Create the backend create route
                 index.create(app);
-                // Connect to the mongo database
-                serverConfig.connect();
                 // See if content can be posted to the url
                 request(app)
                     .post('/create')
@@ -59,12 +68,45 @@ describe('Database Testing', function () {
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
-                    .then(response => {
+                    .then((response) => {
+                        console.log('##############');
                         console.log(response);
+                        console.log('##############');
                         done();
                     }).catch(error => done(error));
-                // addData({"username": "testUsername", "name": "testName"});
             });
         });
+
+        describe('# Finds an item', function () {
+            it("should return a response with the given item", function() {
+                // Create the backend read route
+                index.read(app);
+                // See if content can be posted to the url
+                request(app)
+                    .get('/read')
+                    .set('Accept', 'application/json')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .then((response) => {
+                        done(response);
+                    }).catch(error => done(error));
+            });
+        });
+
+        // describe('# Updates an item', function () {
+        //     it("should return a response with the given item", function() {
+        //         // Create the backend read route
+        //         index.read(app);
+        //         // See if content can be posted to the url
+        //         request(app)
+        //             .get('/read')
+        //             .set('Accept', 'application/json')
+        //             .expect('Content-Type', /json/)
+        //             .expect(200)
+        //             .then((response) => {
+        //                 done(response);
+        //             }).catch(error => done(error));
+        //     });
+        // });
     });
 });
