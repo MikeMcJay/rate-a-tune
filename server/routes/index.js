@@ -20,6 +20,7 @@ exports.create = (app) => {
         try {
             await create.save();
             res.send(create);
+            // res.send({"hey": "there"})
         } catch (error) {
             res.status(500).send(error);
         }

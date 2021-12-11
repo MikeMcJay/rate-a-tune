@@ -2,6 +2,8 @@ const fs = require('fs');
 
 const serverConfig = require('../app');
 const express = require('express');
+const request = require('supertest');
+let { Example } = require('../models/example');
 const app = express();
 
 const index = require('../routes/index');
@@ -44,33 +46,24 @@ describe('Database Testing', function () {
     });
 
     describe('CRUD Functionality', function () {
-        function addData(postData){
-            let packagePromise = fs.promises.readFile('package.json', 'utf8');
-            packagePromise.then((packageData) => {
-                var request = require('request');
-                let clientServerOptions = {
-                    uri: 'http://'+ JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort
-                        + '/' + 'create',
-                    body: JSON.stringify(postData),
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }
-                request(clientServerOptions, function (error, response) {
-                    console.log(error,response.body);
-                });
-            });
-        }
-
         describe('# Creates a new item', function () {
-            it("should have a route that allows for new data creation", async function() {
+            it("should have a route that allows for new data creation", function() {
                 // Create the backend create route
                 index.create(app);
                 // Connect to the mongo database
                 serverConfig.connect();
                 // See if content can be posted to the url
-                addData({"username": "testUsername", "name": "testName"});
+                request(app)
+                    .post('/create')
+                    .send({"username": "testUsername", "name": "testName"})
+                    .set('Accept', 'application/json')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .then(response => {
+                        console.log(response);
+                        done();
+                    }).catch(error => done(error));
+                // addData({"username": "testUsername", "name": "testName"});
             });
         });
     });
