@@ -30,7 +30,7 @@ exports.update = (app) => {
         try {
             await Example.findByIdAndUpdate(
                 { _id: req.params.id }, req.body);
-            console.log('Values updated');
+            // console.log('Values updated');
         } catch (error) {
             res.status(500).send(error);
         }

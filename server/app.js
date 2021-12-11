@@ -19,6 +19,19 @@ crud.read(app);
 crud.create(app);
 crud.delete(app);
 
+function beginServer() {
+    const packagePromise = acquirePackagePromise('./package.json', 'utf8');
+    packagePromise.then((packageData) => {
+        // If the server is already listening to the specified port ignore
+        app.listen(JSON.parse(packageData).serverPort, () => console.log('Server is online at: ' +
+            JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort));
+    }).catch(error => {
+        console.log("**********");
+        console.log('Error: ' + error);
+        console.log("**********")
+    });
+}
+
 async function acquirePackagePromise(fileLocation, encoding) {
     // Return a promise of whether the package file could be read or not
     return fs.promises.readFile(fileLocation, encoding);
@@ -32,7 +45,16 @@ function connectToMongo() {
         const mongoDatabase = 'test';
         mongoose.connect('mongodb://' + JSON.parse(packageData).mongoDockerName + ':' + JSON.parse(packageData).mongoPort +
             '/' + mongoDatabase, { useNewUrlParser: true }, function (error) {
+            let db = mongoose.connection;
+            db.once('open', function() {
+                console.log("**********");
+                console.log('The server is connected to the mongo database');
+                console.log("**********");
+            });
             if (error) {
+                console.log("**********");
+                console.log('Error: ' + error);
+                console.log("**********");
                 return error;
             }
         });
@@ -41,28 +63,8 @@ function connectToMongo() {
     });
     return packagePromise;
 }
-
-function connect() {
-    const packagePromise = connectToMongo();
-    packagePromise.then(packageData => {
-        let db = mongoose.connection;
-        db.once('open', function() {
-            console.log("**********");
-            console.log('The server is connected to the mongo database');
-            console.log("**********");
-        });
-        // If the server is already listening to the specified port ignore
-        if (!app.listen()) {
-            app.listen(JSON.parse(packageData).serverPort, () => console.log('Server is online at: ' +
-                JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort));
-        }
-    }).catch(error => {
-        console.log("**********");
-        console.log('Error: ' + error);
-        console.log("**********");
-    })
-}
-// connect();
+beginServer();
+connectToMongo().then().catch(() => {disconnectFromMongoose()});
 
 function disconnectFromMongoose() {
     mongoose.connection.close();
@@ -70,5 +72,5 @@ function disconnectFromMongoose() {
 
 module.exports.acquirePackagePromise = acquirePackagePromise;
 module.exports.connectToMongo = connectToMongo;
-module.exports.connect = connect;
+module.exports.beginServer = beginServer;
 module.exports.disconnect = disconnectFromMongoose;

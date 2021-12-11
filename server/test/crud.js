@@ -3,7 +3,6 @@ const fs = require('fs');
 const serverConfig = require('../app');
 const express = require('express');
 const request = require('supertest');
-let { Example } = require('../models/example');
 const app = express();
 
 const index = require('../routes/index');
@@ -49,7 +48,7 @@ describe('Database Testing', function () {
 
         beforeEach(function () {
             // Connect to the mongo database
-            serverConfig.connect();
+            serverConfig.connectToMongo();
         })
 
         afterEach(function() {
@@ -58,7 +57,7 @@ describe('Database Testing', function () {
         })
 
         describe('# Creates a new item', function () {
-            it("should have a route that allows for new data creation", function() {
+            it("should call on the /create route without generating error", function() {
                 // Create the backend create route
                 index.create(app);
                 // See if content can be posted to the url
@@ -68,17 +67,14 @@ describe('Database Testing', function () {
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
-                    .then((response) => {
-                        console.log('##############');
-                        console.log(response);
-                        console.log('##############');
+                    .then(() => {
                         done();
                     }).catch(error => done(error));
             });
         });
 
         describe('# Finds an item', function () {
-            it("should return a response with the given item", function() {
+            it("should call on the /read route without generating error", function() {
                 // Create the backend read route
                 index.read(app);
                 // See if content can be posted to the url
@@ -93,20 +89,38 @@ describe('Database Testing', function () {
             });
         });
 
-        // describe('# Updates an item', function () {
-        //     it("should return a response with the given item", function() {
-        //         // Create the backend read route
-        //         index.read(app);
-        //         // See if content can be posted to the url
-        //         request(app)
-        //             .get('/read')
-        //             .set('Accept', 'application/json')
-        //             .expect('Content-Type', /json/)
-        //             .expect(200)
-        //             .then((response) => {
-        //                 done(response);
-        //             }).catch(error => done(error));
-        //     });
-        // });
+        describe('# Updates an item', function () {
+            it("should call on the /update route without generating error", function() {
+                // Create the backend update route
+                index.update(app);
+                // See if content can be posted to the url
+                request(app)
+                    // Pass no id through
+                    .delete('/update/')
+                    .set('Accept', 'application/json')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .then((response) => {
+                        done(response);
+                    }).catch(error => done(error));
+            });
+        });
+
+        describe('# Deletes an item', function () {
+            it("should call on the /delete route without generating error", function() {
+                // Create the backend delete route
+                index.delete(app);
+                // See if content can be posted to the url
+                request(app)
+                    // Pass no id through
+                    .patch('/delete/')
+                    .set('Accept', 'application/json')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .then((response) => {
+                        done(response);
+                    }).catch(error => done(error));
+            });
+        });
     });
 });
