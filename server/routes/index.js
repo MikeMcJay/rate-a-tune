@@ -1,7 +1,8 @@
-const express = require('express');
+// const express = require('express');
+// app = express();
 let { Example } = require('../models/example');
 
-exports = module.exports = function(app) {
+exports.read = (app) => {
     app.get('/read', async (req, res) => {
         const read = await Example.find();
         try {
@@ -10,7 +11,9 @@ exports = module.exports = function(app) {
             res.status(500).send(error);
         }
     });
+}
 
+exports.create = (app) => {
     app.post('/create', async (req, res) => {
         const create = new Example(req.body);
         try {
@@ -20,17 +23,21 @@ exports = module.exports = function(app) {
             res.status(500).send(error);
         }
     });
+}
 
+exports.update = (app) => {
     app.patch('/update/:id', async (req, res) => {
         try {
             await Example.findByIdAndUpdate(
                 { _id: req.params.id }, req.body);
-            console.log('Values updated');
+            // console.log('Values updated');
         } catch (error) {
             res.status(500).send(error);
         }
     });
+}
 
+exports.delete = (app) => {
     app.delete('/delete/:id', async (req, res) => {
         try {
             const del = await Example.findByIdAndDelete({ _id: req.params.id });
