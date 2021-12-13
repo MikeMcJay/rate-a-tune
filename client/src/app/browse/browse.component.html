@@ -5,9 +5,12 @@
   <div *ngFor="let track of searchResult.items" id="{{track.name}}}">
     <img src="{{track.album.images[1].url}}"/>
     <h1>{{track.name}}</h1>
-    <div class="artists" *ngFor="let artist of track.artists">
-      <p class="tune-info">{{artist.name}}</p>
+    <h2 class="tune-info">{{track.album.name}}</h2>
+    <div class="artists">
+      <p class="tune-info" *ngFor="let artist of track.artists; last as isLast;">
+        {{artist.name}}
+        <ng-container *ngIf="!(isLast)">&nbsp;•&nbsp;</ng-container>
+      </p>
     </div>
-    <p class="tune-info">{{track.album.name}}</p>
   </div>
 </div>
