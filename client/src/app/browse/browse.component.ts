@@ -27,6 +27,10 @@ export class BrowseComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  leaveReview(trackID: string) {
+    window.open('/review/' + trackID);
+  }
+
   searchSpotify() {
     let obs: Observable<object> = this.http.get('http://localhost:3000/browse/' + this.searchValue, this.requestOptions);
     obs.subscribe(response => {

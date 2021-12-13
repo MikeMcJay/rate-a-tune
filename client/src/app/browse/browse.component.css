@@ -1,6 +1,7 @@
-/*body {*/
-/*  margin-left: 20px;*/
-/*}*/
+.track {
+  cursor: pointer;
+  width: 50%;
+}
 .artists {
   white-space: nowrap;
   overflow: hidden;

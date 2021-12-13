@@ -2,14 +2,15 @@
 <button (click)="searchSpotify()">Search</button>
 
 <div *ngIf="searchResult">
-  <div *ngFor="let track of searchResult.items" id="{{track.name}}}">
+  <div *ngFor="let track of searchResult.items" id="{{track.name}}}" (click)="leaveReview(track.id)"
+    class="track">
     <img src="{{track.album.images[1].url}}"/>
     <h1>{{track.name}}</h1>
     <h2 class="tune-info">{{track.album.name}}</h2>
     <div class="artists">
       <p class="tune-info" *ngFor="let artist of track.artists; last as isLast;">
         {{artist.name}}
-        <ng-container *ngIf="!(isLast)">&nbsp;•&nbsp;</ng-container>
+        <ng-container *ngIf="!(isLast)">•&nbsp;</ng-container>
       </p>
     </div>
   </div>
