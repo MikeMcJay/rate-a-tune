@@ -1,2 +1,13 @@
 <p>Search a tune<input type="text" [(ngModel)]="searchValue"></p>
 <button (click)="searchSpotify()">Search</button>
+
+<div *ngIf="searchResult">
+  <div *ngFor="let track of searchResult.items" id="{{track.name}}}">
+    <img src="{{track.album.images[1].url}}"/>
+    <h1>{{track.name}}</h1>
+    <div class="artists" *ngFor="let artist of track.artists">
+      <p class="tune-info">{{artist.name}}</p>
+    </div>
+    <p class="tune-info">{{track.album.name}}</p>
+  </div>
+</div>

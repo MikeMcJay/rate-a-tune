@@ -5,7 +5,6 @@ exports.browseSong = (app) => {
         try {
             let token = getToken();
             token.then(result => {
-                console.log(result.access_token);
                 // Make a call to Spotify to retrieve data about spotify songs
                 let request = require('request');
                 let clientServerOptions = {

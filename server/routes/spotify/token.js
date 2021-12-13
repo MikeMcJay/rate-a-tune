@@ -16,12 +16,6 @@ async function getToken() {
             json: true
         };
         return await request(authOptions);
-        // request(authOptions, async function (error, response, body) {
-        //     if (!error && response.statusCode === 200) {
-        //         // Return the access token from Spotify
-        //         return await body.access_token;
-        //     }
-        // });
     } catch (error) {
         return error;
     }

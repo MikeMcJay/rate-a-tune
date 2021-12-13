@@ -1,0 +1,12 @@
+.h1 {
+  font-size: 40px;
+}
+.p {
+  font-size: 25px;
+}
+.artists {
+  white-space: nowrap;
+}
+.tune-info {
+  display: inline-block;
+}
