@@ -3,6 +3,7 @@ import { ReviewComponent } from "./review.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 import { RatingService } from "../rating.service";
+import { SessionService } from "../session.service";
 
 @NgModule({
   declarations: [ReviewComponent],
@@ -11,6 +12,9 @@ import { RatingService } from "../rating.service";
     FormsModule
   ],
   exports: [ReviewComponent],
-  providers: [RatingService]
+  providers: [
+    RatingService,
+    SessionService
+  ]
 })
 export class ReviewModule { }

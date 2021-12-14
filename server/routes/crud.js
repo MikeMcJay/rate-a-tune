@@ -1,8 +1,18 @@
-let { Example } = require('../models/example');
+function schemaToUse(schema) {
+    switch (schema) {
+        case "Example":
+            let { Example } = require('../models/example');
+            return Example;
+        case "Rating":
+            let { Rating } = require('../models/ratings');
+            return Rating;
+    }
+}
 
 exports.read = (app) => {
-    app.get('/read', async (req, res) => {
-        const read = await Example.find();
+    app.post('/read', async (req, res) => {
+        let schema = schemaToUse(JSON.parse(req.body).schema);
+        const read = await schema.find();
         try {
             res.json(read);
         } catch (error) {

@@ -5,7 +5,7 @@ const express = require('express');
 const request = require('supertest');
 const app = express();
 
-const index = require('../routes/index');
+const index = require('../routes/crud');
 
 let assert = require('assert');
 describe('Database Testing', function () {
@@ -79,7 +79,8 @@ describe('Database Testing', function () {
                 index.read(app);
                 // See if content can be posted to the url
                 request(app)
-                    .get('/read')
+                    .post('/read')
+                    .send({"schema": "Example"})
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)

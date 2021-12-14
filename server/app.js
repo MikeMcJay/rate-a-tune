@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Enable Cross Origin for passing data
 app.use(cors({origin: true}));
 
-const crud = require('./routes/index');
+const crud = require('./routes/crud');
 crud.update(app);
 crud.read(app);
 crud.create(app);
