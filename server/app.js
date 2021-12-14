@@ -20,6 +20,7 @@ crud.create(app);
 crud.delete(app);
 const search = require('./routes/spotify/search');
 search.browseSong(app);
+search.getSong(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

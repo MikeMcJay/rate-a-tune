@@ -19,3 +19,14 @@ p {
   font-size: 20px;
   line-height: normal;
 }
+/* Browse and review shared styles */
+.track {
+  width: 50%;
+}
+.artists {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.tune-info {
+  display: inline-block;
+}
