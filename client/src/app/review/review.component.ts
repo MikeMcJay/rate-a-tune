@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {RatingService} from "../rating.service";
 
 @Component({
   selector: 'app-review',
@@ -12,8 +13,9 @@ import { Observable } from 'rxjs';
 export class ReviewComponent implements OnInit {
 
   track: any = null;
+  trackRating: any = null;
 
-  constructor(private http: HttpClient, private Activatedroute:ActivatedRoute) { }
+  constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService) { }
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -31,6 +33,11 @@ export class ReviewComponent implements OnInit {
       console.log(params.get('trackID'));
       this.getSpotifySong(params.get('trackID'));
     });
+  }
+
+  getTuneRating(trackID: string) {
+    this.trackRating = this.reviewService.getRating(trackID);
+    console.log(this.trackRating);
   }
 
   getSpotifySong(trackID: string) {

@@ -5,19 +5,18 @@ const mongoose = require('mongoose');
 // ratings > reviews > tuneID > userID
 
 const ratingSchema = new mongoose.Schema({
-    // For accessing song's star ratings
+    // This single subdocument contains the star ratings for every song
     stars: {
-        // A schema for each individual tune
-        tuneSchema: new mongoose.Schema({
-            // _id (or trackID) is set in the server
-            // A schema for each user rating the tune
-            userRating: new mongoose.Schema({
-                // _id (or the uid) is set in the server
+        // Contains an array of all tunes
+        tunes: [{
+            // Contains an array of all user ratings for that tune
+            user: [{
+                // The rating the user gave that tune
                 rating: Number
-            })
-        })
+            }]
+        }],
     },
-    // For accessing each song's reviews
+    // This single subdocument contains the reviews for every song
     reviews: {}
 });
 module.exports.Rating = mongoose.model('rating', ratingSchema);

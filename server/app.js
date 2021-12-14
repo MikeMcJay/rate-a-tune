@@ -22,6 +22,8 @@ crud.delete(app);
 const search = require('./routes/spotify/search');
 search.browseSong(app);
 search.getSong(app);
+const rating = require('./routes/rating');
+rating.getRating(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

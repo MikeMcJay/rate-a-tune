@@ -27,23 +27,23 @@ export class HomeComponent implements OnInit {
   }
 
   toggleDelete() {
-    let obs: Observable<object> = this.http.delete('http://localhost:3000/delete' + '/example/' + this.idValue);
+    let obs: Observable<object> = this.http.delete('http://localhost:3000/delete/example/' + this.idValue);
     obs.subscribe(response => {
       console.log(response.toString());
     });
   }
 
   toggleUpdate() {
-    let obs: Observable<Object> = this.http.patch('http://localhost:3000/update/' + this.idValue,
-      {username: this.usernameValue, name: this.nameValue, schema: 'example'}, this.requestOptions);
+    let obs: Observable<Object> = this.http.patch('http://localhost:3000/update/example/' + this.idValue,
+      {username: this.usernameValue, name: this.nameValue}, this.requestOptions);
     obs.subscribe(response => {
       console.log(response);
     });
   }
 
   toggleCreate() {
-    let obs: Observable<Object> = this.http.post('http://localhost:3000/create',
-      {username: this.usernameValue, name: this.nameValue, schema: 'example'}, this.requestOptions);
+    let obs: Observable<Object> = this.http.post('http://localhost:3000/create/example',
+      {username: this.usernameValue, name: this.nameValue}, this.requestOptions);
     obs.subscribe(response => {
       console.log(response);
     });

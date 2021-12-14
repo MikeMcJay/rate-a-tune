@@ -1,22 +1,39 @@
 exports.getRating = (app) => {
     app.get('/getRating/:trackID', async (req, res) => {
         try {
-            let token = getToken();
-            token.then(result => {
-                // Make a call to Spotify to retrieve data about spotify songs
-                let request = require('request');
-                let clientServerOptions = {
-                    uri: 'https://api.spotify.com/v1/tracks/' + req.params.trackID,
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                        'Authorization': 'Bearer ' + result.access_token
-                    }
+            let request = require('request');
+            let crudOptions = {
+                uri: '/read/rating/' + req.params.trackID,
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 }
-                request(clientServerOptions, function (error, response) {
-                    res.json(response.body);
-                });
+            }
+            // Needs to calculate the mean rating before sending back
+            request(crudOptions, function (error, response) {
+                res.json(response.body);
+            });
+        } catch (error) {
+            res.send(error);
+        }
+    });
+}
+
+exports.addRating = (app) => {
+    app.post('/addRating/:trackID/:uid', async (req, res) => {
+        try {
+            let request = require('request');
+            let crudOptions = {
+                uri: '/create/rating',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            }
+            request(crudOptions, function (error, response) {
+                res.json(response.body);
             });
         } catch (error) {
             res.send(error);

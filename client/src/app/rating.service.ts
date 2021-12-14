@@ -19,10 +19,19 @@ export class RatingService {
     headers: new HttpHeaders(this.headerDict),
   }
 
-  // getRating(trackID: string) {
-  //   let obs: Observable<object> = this.http.get('http://localhost:3000/getSong/' + trackID, this.requestOptions);
-  //   obs.subscribe(response => {
-  //     this.track = JSON.parse(response.toString());
-  //   });
-  // }
+  getRating(trackID: string) {
+    let obs: Observable<object> = this.http.get('http://localhost:3000/getRating/' + trackID, this.requestOptions);
+    obs.subscribe(response => {
+      // return response.toString();
+      return JSON.parse(response.toString());
+    });
+  }
+
+  addRating(trackID: string, uid: string) {
+    let obs: Observable<object> = this.http.post('http://localhost:3000/addRating/' + trackID, this.requestOptions);
+    obs.subscribe(response => {
+      // return response.toString();
+      return JSON.parse(response.toString());
+    });
+  }
 }

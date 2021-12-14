@@ -62,8 +62,8 @@ describe('Database Testing', function () {
                 index.create(app);
                 // See if content can be posted to the url
                 request(app)
-                    .post('/create')
-                    .send({"username": "testUsername", "name": "testName", "schema": "example"})
+                    .post('/create/example')
+                    .send({"username": "testUsername", "name": "testName"})
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -89,15 +89,14 @@ describe('Database Testing', function () {
             });
         });
 
-        describe('# Updates an item', function () {
-            it("should call on the /update route without generating error", function() {
+        describe('# Deletes an item', function () {
+            it("should call on the /delete route without generating error", function() {
                 // Create the backend update route
-                index.update(app);
+                index.delete(app);
                 // See if content can be posted to the url
                 request(app)
                     // Pass no id through
-                    .delete('/update/')
-                    .send({"schema": "example"})
+                    .delete('/delete/example')
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -107,14 +106,14 @@ describe('Database Testing', function () {
             });
         });
 
-        describe('# Deletes an item', function () {
-            it("should call on the /delete route without generating error", function() {
+        describe('# Updates an item', function () {
+            it("should call on the /update route without generating error", function() {
                 // Create the backend delete route
-                index.delete(app);
+                index.update(app);
                 // See if content can be posted to the url
                 request(app)
                     // Pass a schema but no id
-                    .patch('/delete/example')
+                    .patch('/update/example')
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)

@@ -34,8 +34,8 @@ exports.readByID = (app) => {
 }
 
 exports.create = (app) => {
-    app.post('/create', async (req, res) => {
-        let schema = schemaToUse(req.body.schema);
+    app.post('/create/:schema', async (req, res) => {
+        let schema = schemaToUse(req.params.schema);
         const create = new schema(req.body);
         try {
             await create.save();
@@ -47,8 +47,8 @@ exports.create = (app) => {
 }
 
 exports.update = (app) => {
-    app.patch('/update/:id', async (req, res) => {
-        let schema = schemaToUse(req.body.schema);
+    app.patch('/update/:schema/:id', async (req, res) => {
+        let schema = schemaToUse(req.params.schema);
         try {
             await schema.findByIdAndUpdate(
                 { _id: req.params.id }, req.body);
