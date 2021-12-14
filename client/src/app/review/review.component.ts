@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -37,7 +37,6 @@ export class ReviewComponent implements OnInit {
     let obs: Observable<object> = this.http.get('http://localhost:3000/getSong/' + trackID, this.requestOptions);
     obs.subscribe(response => {
       this.track = JSON.parse(response.toString());
-      // this.searchResult = JSON.parse(response.toString()).tracks;
     });
   }
 
