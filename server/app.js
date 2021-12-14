@@ -15,7 +15,8 @@ app.use(cors({origin: true}));
 
 const crud = require('./routes/crud');
 crud.update(app);
-crud.read(app);
+crud.readAll(app);
+crud.readByID(app);
 crud.create(app);
 crud.delete(app);
 const search = require('./routes/spotify/search');

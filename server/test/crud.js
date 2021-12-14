@@ -76,7 +76,7 @@ describe('Database Testing', function () {
         describe('# Finds an item', function () {
             it("should call on the /read route without generating error", function() {
                 // Create the backend read route
-                index.read(app);
+                index.readAll(app);
                 // See if content can be posted to the url
                 request(app)
                     .get('/read/example')

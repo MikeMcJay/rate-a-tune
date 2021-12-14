@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
   }
 
   toggleRead() {
-    let obs: Observable<Object> = this.http.get('http://localhost:3000/read/example');
+    let obs: Observable<Object> = this.http.get('http://localhost:3000/read/example/' + this.idValue);
     obs.subscribe(response => {
       console.log(response)
     });
