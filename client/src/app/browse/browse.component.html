@@ -1,2 +1,18 @@
 <p>Search a tune<input type="text" [(ngModel)]="searchValue"></p>
-<button (click)="searchSpotify()">Search</button>
+<button (click)="browseSpotify()">Search</button>
+
+<div *ngIf="searchResult">
+  <div *ngFor="let track of searchResult.items" id="{{track.name}}}" class="track">
+    <img src="{{track.album.images[1].url}}"/>
+    <a [routerLink]="['/review', track.id]">
+      <h1>{{track.name}}</h1>
+      <h2 class="tune-info">{{track.album.name}}</h2>
+      <div class="artists">
+          <p class="tune-info" *ngFor="let artist of track.artists; last as isLast;">
+            {{artist.name}}
+            <ng-container *ngIf="!(isLast)">•&nbsp;</ng-container>
+          </p>
+      </div>
+    </a>
+  </div>
+</div>

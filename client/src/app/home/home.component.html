@@ -1,0 +1,19 @@
+<h1>CRUD</h1>
+
+<h2>READ</h2>
+<button (click)="toggleRead()">Read database</button>
+
+<h2>CREATE</h2>
+<p>Username<input type="text" [(ngModel)]="usernameValue"></p>
+<p>Name<input type="text" [(ngModel)]="nameValue"></p>
+<button (click)="toggleCreate()">Create row</button>
+
+<h2>UPDATE</h2>
+<p>ID to edit<input type="text" [(ngModel)]="idValue"></p>
+<p>Username<input type="text" [(ngModel)]="usernameValue"></p>
+<p>Name<input type="text" [(ngModel)]="nameValue"></p>
+<button (click)="toggleUpdate()">Update row</button>
+
+<h2>DELETE</h2>
+<p>ID to delete<input type="text" [(ngModel)]="idValue"></p>
+<button (click)="toggleDelete()">Delete item</button>

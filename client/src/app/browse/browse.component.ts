@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-browse',
@@ -9,7 +9,8 @@ import { Observable, throwError } from 'rxjs';
 })
 export class BrowseComponent implements OnInit {
 
-  searchValue: string = '';
+  searchValue: any;
+  searchResult: any;
 
   constructor(private http: HttpClient) { }
 
@@ -26,10 +27,15 @@ export class BrowseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  searchSpotify() {
-    let obs: Observable<object> = this.http.get('http://localhost:3000/browse/' + this.searchValue);
+  // leaveReview(trackID: string) {
+  //   window.open('/review/' + trackID);
+  // }
+
+  browseSpotify() {
+    let obs: Observable<object> = this.http.get('http://localhost:3000/browse/' + this.searchValue, this.requestOptions);
     obs.subscribe(response => {
-      console.log(response);
+      console.log(JSON.parse(response.toString()).tracks);
+      this.searchResult = JSON.parse(response.toString()).tracks;
     });
   }
 
