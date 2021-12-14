@@ -1,17 +1,17 @@
 function schemaToUse(schema) {
     switch (schema) {
-        case "Example":
+        case "example":
             let { Example } = require('../models/example');
             return Example;
-        case "Rating":
+        case "rating":
             let { Rating } = require('../models/ratings');
             return Rating;
     }
 }
 
 exports.read = (app) => {
-    app.post('/read', async (req, res) => {
-        let schema = schemaToUse(JSON.parse(req.body).schema);
+    app.get('/read/:schema', async (req, res) => {
+        let schema = schemaToUse(req.params.schema);
         const read = await schema.find();
         try {
             res.json(read);
@@ -23,7 +23,8 @@ exports.read = (app) => {
 
 exports.create = (app) => {
     app.post('/create', async (req, res) => {
-        const create = new Example(req.body);
+        let schema = schemaToUse(req.body.schema);
+        const create = new schema(req.body);
         try {
             await create.save();
             res.send(create);
@@ -35,10 +36,10 @@ exports.create = (app) => {
 
 exports.update = (app) => {
     app.patch('/update/:id', async (req, res) => {
+        let schema = schemaToUse(req.body.schema);
         try {
-            await Example.findByIdAndUpdate(
+            await schema.findByIdAndUpdate(
                 { _id: req.params.id }, req.body);
-            // console.log('Values updated');
         } catch (error) {
             res.status(500).send(error);
         }
@@ -46,9 +47,10 @@ exports.update = (app) => {
 }
 
 exports.delete = (app) => {
-    app.delete('/delete/:id', async (req, res) => {
+    app.delete('/delete/:schema/:id', async (req, res) => {
+        let schema = schemaToUse(req.params.schema);
         try {
-            const del = await Example.findByIdAndDelete({ _id: req.params.id });
+            const del = await schema.findByIdAndDelete({ _id: req.params.id });
             if (!del) res.status(404).send('No item found');
         } catch (error) {
             res.status(500).send(error);

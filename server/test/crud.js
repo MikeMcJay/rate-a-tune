@@ -63,7 +63,7 @@ describe('Database Testing', function () {
                 // See if content can be posted to the url
                 request(app)
                     .post('/create')
-                    .send({"username": "testUsername", "name": "testName"})
+                    .send({"username": "testUsername", "name": "testName", "schema": "example"})
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -79,8 +79,7 @@ describe('Database Testing', function () {
                 index.read(app);
                 // See if content can be posted to the url
                 request(app)
-                    .post('/read')
-                    .send({"schema": "Example"})
+                    .get('/read/example')
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -98,6 +97,7 @@ describe('Database Testing', function () {
                 request(app)
                     // Pass no id through
                     .delete('/update/')
+                    .send({"schema": "example"})
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -113,8 +113,8 @@ describe('Database Testing', function () {
                 index.delete(app);
                 // See if content can be posted to the url
                 request(app)
-                    // Pass no id through
-                    .patch('/delete/')
+                    // Pass a schema but no id
+                    .patch('/delete/example')
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)

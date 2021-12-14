@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   }
 
   toggleDelete() {
-    let obs: Observable<object> = this.http.delete('http://localhost:3000/delete/' + this.idValue);
+    let obs: Observable<object> = this.http.delete('http://localhost:3000/delete' + '/example/' + this.idValue);
     obs.subscribe(response => {
       console.log(response.toString());
     });
@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
 
   toggleUpdate() {
     let obs: Observable<Object> = this.http.patch('http://localhost:3000/update/' + this.idValue,
-      {username: this.usernameValue, name: this.nameValue}, this.requestOptions);
+      {username: this.usernameValue, name: this.nameValue, schema: 'example'}, this.requestOptions);
     obs.subscribe(response => {
       console.log(response);
     });
@@ -43,15 +43,14 @@ export class HomeComponent implements OnInit {
 
   toggleCreate() {
     let obs: Observable<Object> = this.http.post('http://localhost:3000/create',
-      {username: this.usernameValue, name: this.nameValue}, this.requestOptions);
+      {username: this.usernameValue, name: this.nameValue, schema: 'example'}, this.requestOptions);
     obs.subscribe(response => {
       console.log(response);
     });
   }
 
   toggleRead() {
-    let obs: Observable<Object> = this.http.post('http://localhost:3000/read',
-      {username: this.usernameValue, name: this.nameValue}, this.requestOptions);
+    let obs: Observable<Object> = this.http.get('http://localhost:3000/read/example');
     obs.subscribe(response => {
       console.log(response)
     });
