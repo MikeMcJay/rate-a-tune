@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {RatingService} from "../rating.service";
+import {SessionService} from "../session.service";
 
 @Component({
   selector: 'app-review',
@@ -14,8 +15,11 @@ export class ReviewComponent implements OnInit {
 
   track: any = null;
   trackRating: any = null;
+  sessionID: any = null;
 
-  constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService) { }
+  constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
+              private userSession: SessionService) {
+  }
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -35,9 +39,26 @@ export class ReviewComponent implements OnInit {
     });
   }
 
-  getTuneRating(trackID: string) {
-    this.trackRating = this.reviewService.getRating(trackID);
-    console.log(this.trackRating);
+  addTuneRating() {
+    // Get the user session
+    this.sessionID = this.userSession.getUserSession();
+    // this.reviewService.addRating(this.track.id, sessionID)
+    let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.sessionID);
+    obs.subscribe(response => {
+      console.log(response);
+    });
+    // this.reviewService.addRating(this.track.id, sessionID).then(obs => {
+    //   obs.subscribe(response => {
+    //     console.log(response)
+    //   });
+    // });
+  }
+
+  getTuneRating() {
+    let obs: Observable<object> = this.reviewService.getRating(this.track.id);
+    obs.subscribe(response => {
+      console.log(JSON.parse(response.toString()));
+    });
   }
 
   getSpotifySong(trackID: string) {

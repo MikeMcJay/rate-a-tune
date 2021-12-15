@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -20,18 +20,10 @@ export class RatingService {
   }
 
   getRating(trackID: string) {
-    let obs: Observable<object> = this.http.get('http://localhost:3000/getRating/' + trackID, this.requestOptions);
-    obs.subscribe(response => {
-      // return response.toString();
-      return JSON.parse(response.toString());
-    });
+    return this.http.get('http://localhost:3000/getRating/' + trackID, this.requestOptions);
   }
 
   addRating(trackID: string, uid: string) {
-    let obs: Observable<object> = this.http.post('http://localhost:3000/addRating/' + trackID, this.requestOptions);
-    obs.subscribe(response => {
-      // return response.toString();
-      return JSON.parse(response.toString());
-    });
+    return this.http.post('http://localhost:3000/addRating/' + trackID + '/' + uid, this.requestOptions);
   }
 }

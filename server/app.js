@@ -24,6 +24,7 @@ search.browseSong(app);
 search.getSong(app);
 const rating = require('./routes/rating');
 rating.getRating(app);
+rating.addRating(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

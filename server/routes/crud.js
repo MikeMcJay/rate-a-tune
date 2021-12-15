@@ -33,6 +33,19 @@ exports.readByID = (app) => {
     });
 }
 
+// exports.insert = (app) => {
+//     app.post('/insert/:schema', async (req, res) => {
+//         let schema = schemaToUse(req.params.schema);
+//         const insert = new schema(req.body);
+//         try {
+//             await create.save();
+//             res.send(create);
+//         } catch (error) {
+//             res.status(500).send(error);
+//         }
+//     });
+// }
+
 exports.create = (app) => {
     app.post('/create/:schema', async (req, res) => {
         let schema = schemaToUse(req.params.schema);
