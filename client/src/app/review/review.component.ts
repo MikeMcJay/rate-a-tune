@@ -39,19 +39,30 @@ export class ReviewComponent implements OnInit {
     });
   }
 
+  deleteTuneRating() {
+    let obs: Observable<object> = this.reviewService.deleteRating(this.track.id);
+    obs.subscribe(response => {
+      console.log((response));
+    });
+  }
+
   addTuneRating() {
     // Get the user session
     this.sessionID = this.userSession.getUserSession();
-    // this.reviewService.addRating(this.track.id, sessionID)
-    let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.sessionID);
-    obs.subscribe(response => {
-      console.log(response);
+    let getObs: Observable<object> = this.reviewService.getRating(this.track.id);
+    getObs.subscribe(response => {
+      if (JSON.parse(response.toString()) === null) {
+        let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.sessionID);
+        obs.subscribe(response => {
+          console.log(response);
+        });
+      } else {
+        let obs: Observable<object> = this.reviewService.insertRating(this.track.id, this.sessionID);
+        obs.subscribe(response => {
+          console.log(response);
+        });
+      }
     });
-    // this.reviewService.addRating(this.track.id, sessionID).then(obs => {
-    //   obs.subscribe(response => {
-    //     console.log(response)
-    //   });
-    // });
   }
 
   getTuneRating() {

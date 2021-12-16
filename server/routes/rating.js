@@ -15,7 +15,7 @@ exports.getRating = (app) => {
         try {
             let request = require('request');
             let crudOptions = {
-                uri: 'http://' + 'localhost:3000' + '/read/rating/' + (trackID),
+                uri: 'http://' + 'localhost:3000' + '/read/tune/' + (trackID),
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ exports.addRating = (app) => {
             let crudOptions = {
                 // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
                 //     '/create/rating',
-                uri: 'http://' + 'localhost:3000' + '/create/rating',
+                uri: 'http://' + 'localhost:3000' + '/create/tune',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,17 +53,83 @@ exports.addRating = (app) => {
                 },
                 json: {
                     _id: (trackID),
-                    tune: {
+                    user: [{
                         _id: (req.params.uid),
-                        user: {
-                            rating: 5
-                        },
-                    },
+                        rating: 5,
+                        review: 'It sounds good'
+                    }],
                 }
             }
             // If there are no ratings about this song
             request(crudOptions, function (error, response) {
                 res.json(response.body);
+            });
+        } catch (error) {
+            res.send(error);
+        }
+    });
+}
+
+exports.insertRating = (app) => {
+    app.patch('/insertRating/:trackID/:uid', async (req, res) => {
+        try {
+            // Ensure that the trackID being used as an ID is 24 hex characters
+            let trackID;
+            if (req.params.trackID.length !== 24) {
+                trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
+            }
+            let request = require('request');
+            let crudOptions = {
+                // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
+                //     '/create/rating',
+                uri: 'http://' + 'localhost:3000' + '/update/tune/' + (trackID),
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                },
+                json: {
+                    $push: {
+                        user: {
+                            _id: (req.params.uid),
+                            rating: 4,
+                            review: 'It sounds good'
+                        }
+                    }
+                }
+            }
+            request(crudOptions, function (error, response) {
+                res.send(response);
+            });
+        } catch (error) {
+            res.send(error);
+        }
+    });
+}
+
+exports.deleteRating = (app) => {
+    app.delete('/deleteRating/:trackID', async (req, res) => {
+        try {
+            // Ensure that the trackID being used as an ID is 24 hex characters
+            let trackID;
+            if (req.params.trackID.length !== 24) {
+                trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
+            }
+            let request = require('request');
+            let crudOptions = {
+                // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
+                //     '/create/rating',
+                uri: 'http://' + 'localhost:3000' + '/delete/tune/' + (trackID),
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                }
+            }
+            request(crudOptions, function (error, response) {
+                res.send(response);
             });
         } catch (error) {
             res.send(error);

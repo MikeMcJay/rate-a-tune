@@ -19,12 +19,15 @@ crud.readAll(app);
 crud.readByID(app);
 crud.create(app);
 crud.delete(app);
+// crud.insert(app);
 const search = require('./routes/spotify/search');
 search.browseSong(app);
 search.getSong(app);
 const rating = require('./routes/rating');
 rating.getRating(app);
 rating.addRating(app);
+rating.deleteRating(app);
+rating.insertRating(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

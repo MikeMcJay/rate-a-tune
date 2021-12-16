@@ -1,11 +1,13 @@
 function schemaToUse(schema) {
+    let { Tune } = require('../models/ratings');
+    let { Example } = require('../models/example');
     switch (schema) {
         case "example":
-            let { Example } = require('../models/example');
             return Example;
-        case "rating":
-            let { Rating } = require('../models/ratings');
-            return Rating;
+        case "tune":
+            return Tune;
+        // case "rating.tune":
+        //     return new Rating.tune;
     }
 }
 
@@ -36,10 +38,15 @@ exports.readByID = (app) => {
 // exports.insert = (app) => {
 //     app.post('/insert/:schema', async (req, res) => {
 //         let schema = schemaToUse(req.params.schema);
-//         const insert = new schema(req.body);
+//         // const insert = new schema(req.body);
+//         const insert = schema.update({
+//             _id:
+//         });
+//
+//
 //         try {
-//             await create.save();
-//             res.send(create);
+//             await insert.save();
+//             res.send(insert);
 //         } catch (error) {
 //             res.status(500).send(error);
 //         }

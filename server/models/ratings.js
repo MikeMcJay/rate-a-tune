@@ -4,14 +4,25 @@ const mongoose = require('mongoose');
 // ratings > tuneID > userID
 // reviews > tuneID > userID
 
-const ratingSchema = new mongoose.Schema({
-    tune: new mongoose.Schema({
-        user: new mongoose.Schema({
-            rating: Number
-        }),
-        _id: String
-    }),
-    _id: String
-}, { collection : 'rating' });
+const userSchema = new mongoose.Schema({
+    _id: String,
+    rating: Number,
+    review: String
+});
 
-module.exports.Rating = mongoose.model('rating', ratingSchema);
+const tuneSchema = new mongoose.Schema({
+    _id: String,
+    user: [userSchema]
+}, { collection : 'tune' });
+
+// const ratingSchema = new mongoose.Schema({
+//     tune: new mongoose.Schema({
+//         user: new mongoose.Schema({
+//             rating: Number,
+//             _id: String
+//         }),
+//         _id: String
+//     })
+// }, { collection : 'rating' });
+
+module.exports.Tune = mongoose.model('tune', tuneSchema);
