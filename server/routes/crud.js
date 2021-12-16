@@ -35,23 +35,17 @@ exports.readByID = (app) => {
     });
 }
 
-// exports.insert = (app) => {
-//     app.post('/insert/:schema', async (req, res) => {
-//         let schema = schemaToUse(req.params.schema);
-//         // const insert = new schema(req.body);
-//         const insert = schema.update({
-//             _id:
-//         });
-//
-//
-//         try {
-//             await insert.save();
-//             res.send(insert);
-//         } catch (error) {
-//             res.status(500).send(error);
-//         }
-//     });
-// }
+exports.readArray = (app) => {
+    app.post('/readArray/:schema/', async (req, res) => {
+        let schema = schemaToUse(req.params.schema);
+        const read = await schema.find(req.body);
+        try {
+            res.json(read);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+}
 
 exports.create = (app) => {
     app.post('/create/:schema', async (req, res) => {

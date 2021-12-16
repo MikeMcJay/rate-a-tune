@@ -5,6 +5,33 @@ let mongoose = require('mongoose');
 //     return fs.promises.readFile(fileLocation, encoding);
 // }
 
+exports.getUser = (app) => {
+    app.post('/getUser/:trackID/:uid', async (req, res) => {
+        // Ensure that the trackID being used as an ID is 24 hex characters
+        let trackID;
+        if (req.params.trackID.length !== 24) {
+            trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
+        }
+        try {
+            let request = require('request');
+            let crudOptions = {
+                uri: 'http://' + 'localhost:3000' + '/readArray/tune/',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                json: { 'user._id': req.params.uid, 'tune._id' : trackID }
+            }
+            request(crudOptions, function (error, response) {
+                res.json(response.body);
+            });
+        } catch (error) {
+            res.send(error);
+        }
+    });
+}
+
 exports.getRating = (app) => {
     app.get('/getRating/:trackID', async (req, res) => {
         // Ensure that the trackID being used as an ID is 24 hex characters

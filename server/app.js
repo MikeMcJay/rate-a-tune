@@ -17,6 +17,7 @@ const crud = require('./routes/crud');
 crud.update(app);
 crud.readAll(app);
 crud.readByID(app);
+crud.readArray(app);
 crud.create(app);
 crud.delete(app);
 // crud.insert(app);
@@ -28,6 +29,7 @@ rating.getRating(app);
 rating.addRating(app);
 rating.deleteRating(app);
 rating.insertRating(app);
+rating.getUser(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

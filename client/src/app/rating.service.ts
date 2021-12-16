@@ -27,12 +27,15 @@ export class RatingService {
     return this.http.get('http://localhost:3000/getRating/' + trackID, this.requestOptions);
   }
 
+  getUser(trackID: string, uid: string) {
+    return this.http.post('http://localhost:3000/getUser/' + trackID + '/' + uid, this.requestOptions);
+  }
+
   insertRating(trackID: string, uid: string) {
     return this.http.patch('http://localhost:3000/insertRating/' + trackID + '/' + uid, this.requestOptions);
   }
 
   addRating(trackID: string, uid: string) {
-    // Determine if there exists a rating for the song already
     return this.http.post('http://localhost:3000/addRating/' + trackID + '/' + uid, this.requestOptions);
   }
 }

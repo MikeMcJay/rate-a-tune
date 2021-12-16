@@ -37,6 +37,8 @@ export class ReviewComponent implements OnInit {
       console.log(params.get('trackID'));
       this.getSpotifySong(params.get('trackID'));
     });
+    // Get the user session
+    this.sessionID = this.userSession.getUserSession();
   }
 
   deleteTuneRating() {
@@ -46,20 +48,33 @@ export class ReviewComponent implements OnInit {
     });
   }
 
+  // getUser() {
+  //   let obs: Observable<object> = this.reviewService.getUser(this.track.id, this.sessionID);
+  //   obs.subscribe(response => {
+  //     console.log((response));
+  //   });
+  // }
+
   addTuneRating() {
-    // Get the user session
-    this.sessionID = this.userSession.getUserSession();
     let getObs: Observable<object> = this.reviewService.getRating(this.track.id);
     getObs.subscribe(response => {
+      // Check if a review has already been left by any user
       if (JSON.parse(response.toString()) === null) {
         let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.sessionID);
         obs.subscribe(response => {
           console.log(response);
         });
       } else {
-        let obs: Observable<object> = this.reviewService.insertRating(this.track.id, this.sessionID);
-        obs.subscribe(response => {
-          console.log(response);
+        // Check if the current user has already left a review
+        let getUserObs: Observable<object> = this.reviewService.getUser(this.track.id, this.sessionID);
+        getUserObs.subscribe(response => {
+          // If the array is empty the current user hasn't added a review
+          if (Object.values(response).length == 0) {
+            let obs: Observable<object> = this.reviewService.insertRating(this.track.id, this.sessionID);
+            obs.subscribe(response => {
+              console.log(response);
+            });
+          }
         });
       }
     });
