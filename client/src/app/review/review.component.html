@@ -14,10 +14,10 @@
     <source src="{{track.preview_url}}" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
+  <h2 *ngIf="trackRating" >{{trackRating}}</h2>
+
   <br>
   <button (click)="addTuneRating()">Add</button>
-  <br>
-  <button (click)="getTuneRating()">Get</button>
   <br>
   <button (click)="deleteTuneRating()">Delete</button>
 </div>

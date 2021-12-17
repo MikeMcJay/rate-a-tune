@@ -34,8 +34,9 @@ export class ReviewComponent implements OnInit {
   ngOnInit() {
     let routeParamObs: Observable<any> = this.Activatedroute.paramMap;
     routeParamObs.subscribe(params => {
-      console.log(params.get('trackID'));
       this.getSpotifySong(params.get('trackID'));
+      // Acquire the tune's average rating
+      this.getTuneRating(params.get('trackID'));
     });
     // Get the user session
     this.sessionID = this.userSession.getUserSession();
@@ -80,10 +81,11 @@ export class ReviewComponent implements OnInit {
     });
   }
 
-  getTuneRating() {
-    let obs: Observable<object> = this.reviewService.getRating(this.track.id);
+  getTuneRating(trackID: string) {
+    let obs: Observable<any> = this.reviewService.getRating(trackID);
     obs.subscribe(response => {
-      console.log(JSON.parse(response.toString()));
+      let decimalPlaces = 1;
+      this.trackRating = Math.trunc(response.rating * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
     });
   }
 
