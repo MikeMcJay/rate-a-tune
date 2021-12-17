@@ -84,8 +84,12 @@ export class ReviewComponent implements OnInit {
   getTuneRating(trackID: string) {
     let obs: Observable<any> = this.reviewService.getRating(trackID);
     obs.subscribe(response => {
-      let decimalPlaces = 1;
-      this.trackRating = Math.trunc(response.rating * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
+      if (response) {
+        let decimalPlaces = 1;
+        this.trackRating = Math.trunc(response.rating * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
+      } else {
+        this.trackRating = 'No ratings yet';
+      }
     });
   }
 

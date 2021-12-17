@@ -51,12 +51,16 @@ exports.getRating = (app) => {
             }
             // Needs to calculate the mean rating before sending back
             request(crudOptions, function (error, response) {
-                let users = JSON.parse(response.body.toString()).user;
-                let rating = 0;
-                for(let i = 0, l = users.length; i < l; i++) {
-                    rating += users[i].rating;
+                if (!JSON.parse(response.body.toString())) {
+                    res.json(null);
+                } else {
+                    let users = JSON.parse(response.body.toString()).user;
+                    let rating = 0;
+                    for(let i = 0, l = users.length; i < l; i++) {
+                        rating += users[i].rating;
+                    }
+                    res.json({'rating': rating / users.length});
                 }
-                res.json({'rating': rating / users.length});
             });
         } catch (error) {
             res.send(error);
