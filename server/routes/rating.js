@@ -1,9 +1,5 @@
 const { ObjectId } = require('mongodb');
 let mongoose = require('mongoose');
-// async function acquirePackagePromise(fileLocation, encoding) {
-//     // Return a promise of whether the package file could be read or not
-//     return fs.promises.readFile(fileLocation, encoding);
-// }
 
 exports.getUser = (app) => {
     app.post('/getUser/:trackID/:uid', async (req, res) => {
@@ -21,7 +17,7 @@ exports.getUser = (app) => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
-                json: { 'user._id': req.params.uid, 'tune._id' : trackID }
+                json: { 'user._id': req.params.uid, '_id' : trackID }
             }
             request(crudOptions, function (error, response) {
                 res.json(response.body[0]);

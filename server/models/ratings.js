@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
     _id: String,
     rating: Number,
-    review: String
+    // review: String
 });
 
 const tuneSchema = new mongoose.Schema({

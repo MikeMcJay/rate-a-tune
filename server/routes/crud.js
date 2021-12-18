@@ -6,8 +6,6 @@ function schemaToUse(schema) {
             return Example;
         case "tune":
             return Tune;
-        // case "rating.tune":
-        //     return new Rating.tune;
     }
 }
 
