@@ -3,7 +3,6 @@ import { BrowseComponent } from './browse.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router';
-import { RatingService } from "../rating.service";
 
 @NgModule({
   declarations: [BrowseComponent],
@@ -13,6 +12,6 @@ import { RatingService } from "../rating.service";
     RouterModule
   ],
   exports: [BrowseComponent],
-  providers: [RatingService]
+  providers: []
 })
 export class BrowseModule { }

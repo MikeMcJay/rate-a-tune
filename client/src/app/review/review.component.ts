@@ -99,11 +99,10 @@ export class ReviewComponent implements OnInit {
         let getUserObs: Observable<any> = this.reviewService.getUserRatings(trackID, this.sessionID);
         getUserObs.subscribe(response => {
           // If the response isn't null the current user has added a review
-          console.log(response.user)
           if (response) {
             let user = response.user;
-            for(let i = 0, l = Object.values(response).length; i < l; i++) {
-              if (user[i]._id === this.sessionID) {
+            for(let i = 0, l = Object.values(response).length - 1; i < l; i++) {
+              if (user[i]['_id'] === this.sessionID) {
                 this.userRating = user[i].rating;
               }
             }
