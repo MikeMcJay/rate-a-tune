@@ -15,6 +15,7 @@ export class ReviewComponent implements OnInit {
 
   track: any = null;
   trackRating: any = null;
+  userRating: string = '';
   sessionID: any = null;
 
   constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
@@ -33,13 +34,13 @@ export class ReviewComponent implements OnInit {
 
   ngOnInit() {
     let routeParamObs: Observable<any> = this.Activatedroute.paramMap;
+    // Get the user session
+    this.sessionID = this.userSession.getUserSession();
     routeParamObs.subscribe(params => {
       this.getSpotifySong(params.get('trackID'));
       // Acquire the tune's average rating
       this.getTuneRating(params.get('trackID'));
     });
-    // Get the user session
-    this.sessionID = this.userSession.getUserSession();
   }
 
   deleteTuneRating() {
@@ -57,21 +58,27 @@ export class ReviewComponent implements OnInit {
   // }
 
   addTuneRating() {
-    let getObs: Observable<object> = this.reviewService.getRating(this.track.id);
+    let getObs: Observable<any> = this.reviewService.getRating(this.track.id);
     getObs.subscribe(response => {
-      // Check if a review has already been left by any user
-      if (JSON.parse(response.toString()) === null) {
-        let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.sessionID);
+      // Check if a rating has already been left by any user
+      if (response === null) {
+        let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.userRating, this.sessionID);
         obs.subscribe(response => {
           console.log(response);
         });
       } else {
-        // Check if the current user has already left a review
+        // Check if the current user has already left a rating
         let getUserObs: Observable<object> = this.reviewService.getUser(this.track.id, this.sessionID);
         getUserObs.subscribe(response => {
-          // If the array is empty the current user hasn't added a review
-          if (Object.values(response).length == 0) {
-            let obs: Observable<object> = this.reviewService.insertRating(this.track.id, this.sessionID);
+          // If the response is null the current user hasn't added a rating
+          if (response === null) {
+            let obs: Observable<object> = this.reviewService.insertRating(this.track.id, this.userRating, this.sessionID);
+            obs.subscribe(response => {
+              console.log(response);
+            });
+          } else {
+            // If it isn't null, we just need to update the rating
+            let obs: Observable<object> = this.reviewService.updateRating(this.track.id, this.userRating, this.sessionID);
             obs.subscribe(response => {
               console.log(response);
             });
@@ -84,9 +91,24 @@ export class ReviewComponent implements OnInit {
   getTuneRating(trackID: string) {
     let obs: Observable<any> = this.reviewService.getRating(trackID);
     obs.subscribe(response => {
+      // Check whether the song has a rating to show
       if (response) {
         let decimalPlaces = 1;
         this.trackRating = Math.trunc(response.rating * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
+        // Check whether the user has a rating to show
+        let getUserObs: Observable<any> = this.reviewService.getUser(trackID, this.sessionID);
+        getUserObs.subscribe(response => {
+          console.log(response);
+          // If the response isn't null the current user has added a review
+          if (response) {
+            let user = response.user;
+            for(let i = 0, l = Object.values(response).length; i < l; i++) {
+              if (user[i]._id === this.sessionID) {
+                this.userRating = user[i].rating;
+              }
+            }
+          }
+        });
       } else {
         this.trackRating = 'No ratings yet';
       }

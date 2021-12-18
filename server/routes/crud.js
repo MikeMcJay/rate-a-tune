@@ -72,6 +72,18 @@ exports.update = (app) => {
     });
 }
 
+exports.updateArray = (app) => {
+    app.patch('/updateArray/:schema/', async (req, res) => {
+        let schema = schemaToUse(req.params.schema);
+        const update = await schema.update(req.body.where, req.body.set);
+        try {
+            res.json(update);
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    });
+}
+
 exports.delete = (app) => {
     app.delete('/delete/:schema/:id', async (req, res) => {
         let schema = schemaToUse(req.params.schema);

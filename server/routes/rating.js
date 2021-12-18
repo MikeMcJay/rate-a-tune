@@ -24,7 +24,7 @@ exports.getUser = (app) => {
                 json: { 'user._id': req.params.uid, 'tune._id' : trackID }
             }
             request(crudOptions, function (error, response) {
-                res.json(response.body);
+                res.json(response.body[0]);
             });
         } catch (error) {
             res.send(error);
@@ -54,13 +54,53 @@ exports.getRating = (app) => {
                 if (!JSON.parse(response.body.toString())) {
                     res.json(null);
                 } else {
-                    let users = JSON.parse(response.body.toString()).user;
+                    let user = JSON.parse(response.body.toString()).user;
                     let rating = 0;
-                    for(let i = 0, l = users.length; i < l; i++) {
-                        rating += users[i].rating;
+                    for(let i = 0, l = user.length; i < l; i++) {
+                        rating += user[i].rating;
                     }
-                    res.json({'rating': rating / users.length});
+                    res.json({'rating': rating / user.length});
                 }
+            });
+        } catch (error) {
+            res.send(error);
+        }
+    });
+}
+
+exports.updateRating = (app) => {
+    app.patch('/updateRating/:trackID/:uid', async (req, res) => {
+        try {
+            // Ensure that the trackID being used as an ID is 24 hex characters
+            let trackID;
+            if (req.params.trackID.length !== 24) {
+                trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
+            }
+            let request = require('request');
+            let crudOptions = {
+                // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
+                //     '/create/rating',
+                uri: 'http://' + 'localhost:3000' + '/updateArray/tune/',
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'Access-Control-Allow-Headers': 'Content-Type',
+                },
+                json: {
+                    where: {
+                        'user._id' : req.params.uid,
+                    },
+                    set: {
+                        $set: {
+                            'user.$._id': req.params.uid,
+                            'user.$.rating': req.body.userRating
+                        }
+                    }
+                }
+            }
+            request(crudOptions, function (error, response) {
+                res.send(response);
             });
         } catch (error) {
             res.send(error);
@@ -91,8 +131,8 @@ exports.addRating = (app) => {
                     _id: (trackID),
                     user: [{
                         _id: (req.params.uid),
-                        rating: 5,
-                        review: 'It sounds good'
+                        rating: req.body.userRating,
+                        // review: 'It sounds good'
                     }],
                 }
             }
@@ -129,8 +169,8 @@ exports.insertRating = (app) => {
                     $push: {
                         user: {
                             _id: (req.params.uid),
-                            rating: 4,
-                            review: 'It sounds good'
+                            rating: req.body.userRating,
+                            // review: 'It sounds good'
                         }
                     }
                 }

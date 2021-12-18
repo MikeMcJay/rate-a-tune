@@ -15,6 +15,7 @@ app.use(cors({origin: true}));
 
 const crud = require('./routes/crud');
 crud.update(app);
+crud.updateArray(app);
 crud.readAll(app);
 crud.readByID(app);
 crud.readArray(app);
@@ -30,6 +31,7 @@ rating.addRating(app);
 rating.deleteRating(app);
 rating.insertRating(app);
 rating.getUser(app);
+rating.updateRating(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

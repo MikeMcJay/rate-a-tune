@@ -16,8 +16,14 @@
   </audio>
   <h2 *ngIf="trackRating" >{{trackRating}}</h2>
 
-  <br>
-  <button (click)="addTuneRating()">Add</button>
+  <div>
+    <!-- Contains information the user has submitted -->
+    <ng-container>
+      <input type="text" [(ngModel)]="userRating">
+      <button (click)="addTuneRating()">Submit</button>
+    </ng-container>
+  </div>
+
   <br>
   <button (click)="deleteTuneRating()">Delete</button>
 </div>

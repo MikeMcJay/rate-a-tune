@@ -31,11 +31,18 @@ export class RatingService {
     return this.http.post('http://localhost:3000/getUser/' + trackID + '/' + uid, this.requestOptions);
   }
 
-  insertRating(trackID: string, uid: string) {
-    return this.http.patch('http://localhost:3000/insertRating/' + trackID + '/' + uid, this.requestOptions);
+  insertRating(trackID: string, userRating:string, uid: string) {
+    return this.http.patch('http://localhost:3000/insertRating/' + trackID + '/' + uid,
+      {userRating: userRating}, this.requestOptions);
   }
 
-  addRating(trackID: string, uid: string) {
-    return this.http.post('http://localhost:3000/addRating/' + trackID + '/' + uid, this.requestOptions);
+  addRating(trackID: string, userRating: string, uid: string) {
+    return this.http.post('http://localhost:3000/addRating/' + trackID + '/' + uid,
+      {userRating: userRating}, this.requestOptions);
+  }
+
+  updateRating(trackID: string, userRating: string, uid: string) {
+    return this.http.patch('http://localhost:3000/updateRating/' + trackID + '/' + uid,
+      {userRating: userRating}, this.requestOptions);
   }
 }
