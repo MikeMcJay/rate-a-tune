@@ -13,14 +13,25 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Enable Cross Origin for passing data
 app.use(cors({origin: true}));
 
-const crud = require('./routes/index');
+const crud = require('./routes/crud');
 crud.update(app);
-crud.read(app);
+crud.updateArray(app);
+crud.readAll(app);
+crud.readByID(app);
+crud.readArray(app);
 crud.create(app);
 crud.delete(app);
+// crud.insert(app);
 const search = require('./routes/spotify/search');
 search.browseSong(app);
 search.getSong(app);
+const rating = require('./routes/rating');
+rating.getRating(app);
+rating.addRating(app);
+rating.deleteRating(app);
+rating.insertRating(app);
+rating.getUser(app);
+rating.updateRating(app);
 
 function beginServer() {
     const packagePromise = acquirePackagePromise('./package.json', 'utf8');

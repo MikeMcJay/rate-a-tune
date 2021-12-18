@@ -14,4 +14,16 @@
     <source src="{{track.preview_url}}" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
+  <h2 *ngIf="trackRating" >{{trackRating}}</h2>
+
+  <div>
+    <!-- Contains information the user has submitted -->
+    <ng-container>
+      <input type="text" [(ngModel)]="userRating">
+      <button (click)="addTuneRating()">Submit</button>
+    </ng-container>
+  </div>
+
+  <br>
+  <button (click)="deleteTuneRating()">Delete</button>
 </div>

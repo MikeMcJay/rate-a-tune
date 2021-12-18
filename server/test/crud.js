@@ -5,7 +5,7 @@ const express = require('express');
 const request = require('supertest');
 const app = express();
 
-const index = require('../routes/index');
+const index = require('../routes/crud');
 
 let assert = require('assert');
 describe('Database Testing', function () {
@@ -62,7 +62,7 @@ describe('Database Testing', function () {
                 index.create(app);
                 // See if content can be posted to the url
                 request(app)
-                    .post('/create')
+                    .post('/create/example')
                     .send({"username": "testUsername", "name": "testName"})
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
@@ -76,27 +76,10 @@ describe('Database Testing', function () {
         describe('# Finds an item', function () {
             it("should call on the /read route without generating error", function() {
                 // Create the backend read route
-                index.read(app);
+                index.readAll(app);
                 // See if content can be posted to the url
                 request(app)
-                    .get('/read')
-                    .set('Accept', 'application/json')
-                    .expect('Content-Type', /json/)
-                    .expect(200)
-                    .then((response) => {
-                        done(response);
-                    }).catch(error => done(error));
-            });
-        });
-
-        describe('# Updates an item', function () {
-            it("should call on the /update route without generating error", function() {
-                // Create the backend update route
-                index.update(app);
-                // See if content can be posted to the url
-                request(app)
-                    // Pass no id through
-                    .delete('/update/')
+                    .get('/read/example')
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
@@ -108,12 +91,29 @@ describe('Database Testing', function () {
 
         describe('# Deletes an item', function () {
             it("should call on the /delete route without generating error", function() {
-                // Create the backend delete route
+                // Create the backend update route
                 index.delete(app);
                 // See if content can be posted to the url
                 request(app)
                     // Pass no id through
-                    .patch('/delete/')
+                    .delete('/delete/example')
+                    .set('Accept', 'application/json')
+                    .expect('Content-Type', /json/)
+                    .expect(200)
+                    .then((response) => {
+                        done(response);
+                    }).catch(error => done(error));
+            });
+        });
+
+        describe('# Updates an item', function () {
+            it("should call on the /update route without generating error", function() {
+                // Create the backend delete route
+                index.update(app);
+                // See if content can be posted to the url
+                request(app)
+                    // Pass a schema but no id
+                    .patch('/update/example')
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)

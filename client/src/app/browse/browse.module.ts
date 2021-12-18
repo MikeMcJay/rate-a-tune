@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     RouterModule
   ],
-  exports: [BrowseComponent]
+  exports: [BrowseComponent],
+  providers: []
 })
 export class BrowseModule { }

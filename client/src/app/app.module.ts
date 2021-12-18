@@ -12,6 +12,7 @@ import { ReviewModule } from "./review/review.module";
 import { FormsModule } from '@angular/forms'
 
 import { HttpClientModule } from '@angular/common/http';
+import { SessionService } from "./session.service";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    SessionService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
