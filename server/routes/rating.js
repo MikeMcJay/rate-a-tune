@@ -85,7 +85,10 @@ exports.updateRating = (app) => {
                 },
                 json: {
                     where: {
-                        'user._id' : req.params.uid,
+                        $and: [{
+                            'user._id' : req.params.uid,
+                            '_id': trackID
+                        }],
                     },
                     set: {
                         $set: {

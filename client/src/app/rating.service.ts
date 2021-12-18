@@ -27,7 +27,7 @@ export class RatingService {
     return this.http.get('http://localhost:3000/getRating/' + trackID, this.requestOptions);
   }
 
-  getUser(trackID: string, uid: string) {
+  getUserRatings(trackID: string, uid: string) {
     return this.http.post('http://localhost:3000/getUser/' + trackID + '/' + uid, this.requestOptions);
   }
 

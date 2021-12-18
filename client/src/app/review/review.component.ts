@@ -68,7 +68,7 @@ export class ReviewComponent implements OnInit {
         });
       } else {
         // Check if the current user has already left a rating
-        let getUserObs: Observable<object> = this.reviewService.getUser(this.track.id, this.sessionID);
+        let getUserObs: Observable<object> = this.reviewService.getUserRatings(this.track.id, this.sessionID);
         getUserObs.subscribe(response => {
           // If the response is null the current user hasn't added a rating
           if (response === null) {
@@ -96,7 +96,7 @@ export class ReviewComponent implements OnInit {
         let decimalPlaces = 1;
         this.trackRating = Math.trunc(response.rating * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
         // Check whether the user has a rating to show
-        let getUserObs: Observable<any> = this.reviewService.getUser(trackID, this.sessionID);
+        let getUserObs: Observable<any> = this.reviewService.getUserRatings(trackID, this.sessionID);
         getUserObs.subscribe(response => {
           // If the response isn't null the current user has added a review
           console.log(response.user)
