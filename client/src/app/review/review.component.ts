@@ -50,13 +50,6 @@ export class ReviewComponent implements OnInit {
     });
   }
 
-  // getUser() {
-  //   let obs: Observable<object> = this.reviewService.getUser(this.track.id, this.sessionID);
-  //   obs.subscribe(response => {
-  //     console.log((response));
-  //   });
-  // }
-
   addTuneRating() {
     let getObs: Observable<any> = this.reviewService.getRating(this.track.id);
     getObs.subscribe(response => {
@@ -101,8 +94,9 @@ export class ReviewComponent implements OnInit {
           // If the response isn't null the current user has added a review
           if (response) {
             let user = response.user;
-            for(let i = 0, l = Object.values(response).length - 1; i < l; i++) {
-              if (user[i]['_id'] === this.sessionID) {
+            for(let i = 0, l = Object.values(response).length; i < l; i++) {
+              // Safely access the nested _id property without flagging it as undefined
+              if (user[i] && user[i]._id === this.sessionID) {
                 this.userRating = user[i].rating;
               }
             }

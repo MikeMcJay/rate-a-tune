@@ -15,14 +15,4 @@ const tuneSchema = new mongoose.Schema({
     user: [userSchema]
 }, { collection : 'tune' });
 
-// const ratingSchema = new mongoose.Schema({
-//     tune: new mongoose.Schema({
-//         user: new mongoose.Schema({
-//             rating: Number,
-//             _id: String
-//         }),
-//         _id: String
-//     })
-// }, { collection : 'rating' });
-
 module.exports.Tune = mongoose.model('tune', tuneSchema);

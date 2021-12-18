@@ -1,13 +1,16 @@
 const { ObjectId } = require('mongodb');
 let mongoose = require('mongoose');
 
+function formatTrackID(trackID) {
+    // Ensure that the trackID being used as an ID is 24 hex characters
+    if (trackID.length !== 24) {
+        return (trackID + '0'.repeat(24 - trackID.length));
+    }
+}
+
 exports.getUser = (app) => {
     app.post('/getUser/:trackID/:uid', async (req, res) => {
-        // Ensure that the trackID being used as an ID is 24 hex characters
-        let trackID;
-        if (req.params.trackID.length !== 24) {
-            trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
-        }
+        let trackID = formatTrackID(req.params.trackID);
         try {
             let request = require('request');
             let crudOptions = {
@@ -30,11 +33,7 @@ exports.getUser = (app) => {
 
 exports.getRating = (app) => {
     app.get('/getRating/:trackID', async (req, res) => {
-        // Ensure that the trackID being used as an ID is 24 hex characters
-        let trackID;
-        if (req.params.trackID.length !== 24) {
-            trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
-        }
+        let trackID = formatTrackID(req.params.trackID);
         try {
             let request = require('request');
             let crudOptions = {
@@ -52,7 +51,7 @@ exports.getRating = (app) => {
                 } else {
                     let user = JSON.parse(response.body.toString()).user;
                     let rating = 0;
-                    for(let i = 0, l = user.length; i < l; i++) {
+                    for(let i = 0, l = (user.length); i < l; i++) {
                         rating += user[i].rating;
                     }
                     res.json({'rating': rating / user.length});
@@ -67,11 +66,7 @@ exports.getRating = (app) => {
 exports.updateRating = (app) => {
     app.patch('/updateRating/:trackID/:uid', async (req, res) => {
         try {
-            // Ensure that the trackID being used as an ID is 24 hex characters
-            let trackID;
-            if (req.params.trackID.length !== 24) {
-                trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
-            }
+            let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
                 // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
@@ -110,11 +105,7 @@ exports.updateRating = (app) => {
 exports.addRating = (app) => {
     app.post('/addRating/:trackID/:uid', async (req, res) => {
         try {
-            // Ensure that the trackID being used as an ID is 24 hex characters
-            let trackID;
-            if (req.params.trackID.length !== 24) {
-                trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
-            }
+            let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
                 // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
@@ -148,11 +139,7 @@ exports.addRating = (app) => {
 exports.insertRating = (app) => {
     app.patch('/insertRating/:trackID/:uid', async (req, res) => {
         try {
-            // Ensure that the trackID being used as an ID is 24 hex characters
-            let trackID;
-            if (req.params.trackID.length !== 24) {
-                trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
-            }
+            let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
                 // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
@@ -186,11 +173,7 @@ exports.insertRating = (app) => {
 exports.deleteRating = (app) => {
     app.delete('/deleteRating/:trackID', async (req, res) => {
         try {
-            // Ensure that the trackID being used as an ID is 24 hex characters
-            let trackID;
-            if (req.params.trackID.length !== 24) {
-                trackID = req.params.trackID + '0'.repeat(24 - req.params.trackID.length);
-            }
+            let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
                 // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
