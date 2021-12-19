@@ -19,7 +19,7 @@
     <div>
       <!-- Contains information the user has submitted -->
       <ng-container>
-        <input type="text" [(ngModel)]="userRating">
+        <input type="number" min="1" max="5" [(ngModel)]="userRating">
         <button (click)="addTuneRating()">Submit</button>
       </ng-container>
     </div>

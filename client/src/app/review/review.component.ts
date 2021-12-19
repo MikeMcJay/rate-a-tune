@@ -60,7 +60,9 @@ export class ReviewComponent implements OnInit {
       if (response === null) {
         let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.userRating, this.sessionID);
         obs.subscribe(response => {
-          console.log(response);
+          // console.log(response);
+          // Reload the page with the added result
+          window.location.reload();
         });
       } else {
         // Check if the current user has already left a rating
@@ -70,13 +72,15 @@ export class ReviewComponent implements OnInit {
           if (response === null) {
             let obs: Observable<object> = this.reviewService.insertRating(this.track.id, this.userRating, this.sessionID);
             obs.subscribe(response => {
-              console.log(response);
+              // console.log(response);
+              window.location.reload();
             });
           } else {
             // If it isn't null, we just need to update the rating
             let obs: Observable<object> = this.reviewService.updateRating(this.track.id, this.userRating, this.sessionID);
             obs.subscribe(response => {
-              console.log(response);
+              // console.log(response);
+              window.location.reload();
             });
           }
         });
