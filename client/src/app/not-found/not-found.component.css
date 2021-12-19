@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+h1 {
+  font-size: 40px;
+  line-height: normal;
+}
+.error {
+  margin-top: 180px;
+  text-align: center;
+}
