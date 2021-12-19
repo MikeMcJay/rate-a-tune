@@ -13,10 +13,12 @@ import { FormsModule } from '@angular/forms'
 
 import { HttpClientModule } from '@angular/common/http';
 import { SessionService } from "./session.service";
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,11 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from "./home/home.component";
 import { BrowseComponent } from "./browse/browse.component";
 import { ReviewComponent } from "./review/review.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', redirectTo: '/browse', pathMatch: 'full' },
+  // Uncomment to view the example component made at the start of the project
+  // { path: 'home', component: HomeComponent },
   { path: 'browse', component: BrowseComponent },
-  { path: 'review/:trackID', component: ReviewComponent }
+  { path: 'review/:trackID', component: ReviewComponent },
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({
