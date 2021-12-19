@@ -40,6 +40,7 @@ p {
 .rating-button {
   margin-bottom: 10px;
 }
-.center {
+.error {
+  margin-top: 180px;
   text-align: center;
 }

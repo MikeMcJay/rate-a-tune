@@ -7,6 +7,7 @@ import { SessionService } from "../session.service";
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [ReviewComponent],
@@ -14,12 +15,14 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     FormsModule,
     MatSliderModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   exports: [
     ReviewComponent,
     MatSliderModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [
     RatingService,

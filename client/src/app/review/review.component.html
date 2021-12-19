@@ -31,6 +31,7 @@
   </div>
 </div>
 
-<div *ngIf="error !== null">
-  <p>There was an error getting your request: {{error}}</p>
+<div *ngIf="error !== null" class="error">
+  <mat-icon style="transform: scale(5); margin-bottom: 50px;">warning</mat-icon>
+  <h1>There was an error getting your request: {{error}}</h1>
 </div>
