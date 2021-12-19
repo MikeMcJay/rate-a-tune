@@ -14,6 +14,6 @@ export class AppComponent {
     if (!session.doesSessionExist()) {
       session.createUserSession();
     }
-    console.log(session.getUserSession());
+    console.log('Current User UID: ' + session.getUserSession());
   }
 }
