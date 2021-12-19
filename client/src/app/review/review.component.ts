@@ -17,6 +17,7 @@ export class ReviewComponent implements OnInit {
   trackRating: any = null;
   userRating: string = '';
   sessionID: any = null;
+  error: any;
 
   constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
               private userSession: SessionService) {
@@ -33,6 +34,8 @@ export class ReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Reset the error
+    this.error = null;
     let routeParamObs: Observable<any> = this.Activatedroute.paramMap;
     // Get the user session
     this.sessionID = this.userSession.getUserSession();
@@ -83,7 +86,8 @@ export class ReviewComponent implements OnInit {
 
   getTuneRating(trackID: string) {
     let obs: Observable<any> = this.reviewService.getRating(trackID);
-    obs.subscribe(response => {
+    obs.subscribe(
+      response => {
       // Check whether the song has a rating to show
       if (response) {
         let decimalPlaces = 1;
@@ -105,14 +109,26 @@ export class ReviewComponent implements OnInit {
       } else {
         this.trackRating = 'No ratings yet';
       }
+    },
+    error => {
+      this.error = error;
     });
   }
 
   getSpotifySong(trackID: string) {
-    let obs: Observable<object> = this.http.get('http://localhost:3000/getSong/' + trackID, this.requestOptions);
-    obs.subscribe(response => {
-      this.track = JSON.parse(response.toString());
-    });
+    let obs: Observable<any> = this.http.get('http://localhost:3000/getSong/' + trackID, this.requestOptions);
+    obs.subscribe(
+      response => {
+        if (JSON.parse(response).error) {
+          this.error = JSON.parse(response).error.status;
+        } else {
+          this.track = JSON.parse(response);
+        }
+      },
+      error => {
+        this.error = error;
+      }
+    );
   }
 
 }
