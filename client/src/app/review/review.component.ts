@@ -47,9 +47,10 @@ export class ReviewComponent implements OnInit {
   }
 
   deleteTuneRating() {
-    let obs: Observable<object> = this.reviewService.deleteRating(this.track.id);
+    let obs: Observable<any> = this.reviewService.deleteRating(this.track.id);
     obs.subscribe(response => {
-      console.log((response));
+      // console.log(response);
+      window.location.reload();
     });
   }
 
@@ -58,7 +59,7 @@ export class ReviewComponent implements OnInit {
     getObs.subscribe(response => {
       // Check if a rating has already been left by any user
       if (response === null) {
-        let obs: Observable<object> = this.reviewService.addRating(this.track.id, this.userRating, this.sessionID);
+        let obs: Observable<any> = this.reviewService.addRating(this.track.id, this.userRating, this.sessionID);
         obs.subscribe(response => {
           // console.log(response);
           // Reload the page with the added result
@@ -66,18 +67,18 @@ export class ReviewComponent implements OnInit {
         });
       } else {
         // Check if the current user has already left a rating
-        let getUserObs: Observable<object> = this.reviewService.getUserRatings(this.track.id, this.sessionID);
+        let getUserObs: Observable<any> = this.reviewService.getUserRatings(this.track.id, this.sessionID);
         getUserObs.subscribe(response => {
           // If the response is null the current user hasn't added a rating
           if (response === null) {
-            let obs: Observable<object> = this.reviewService.insertRating(this.track.id, this.userRating, this.sessionID);
+            let obs: Observable<any> = this.reviewService.insertRating(this.track.id, this.userRating, this.sessionID);
             obs.subscribe(response => {
               // console.log(response);
               window.location.reload();
             });
           } else {
             // If it isn't null, we just need to update the rating
-            let obs: Observable<object> = this.reviewService.updateRating(this.track.id, this.userRating, this.sessionID);
+            let obs: Observable<any> = this.reviewService.updateRating(this.track.id, this.userRating, this.sessionID);
             obs.subscribe(response => {
               // console.log(response);
               window.location.reload();
