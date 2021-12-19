@@ -5,13 +5,22 @@ import { FormsModule } from '@angular/forms'
 import { RatingService } from "../rating.service";
 import { SessionService } from "../session.service";
 
+import { MatSliderModule } from '@angular/material/slider';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [ReviewComponent],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MatSliderModule,
+    MatButtonModule
   ],
-  exports: [ReviewComponent],
+  exports: [
+    ReviewComponent,
+    MatSliderModule,
+    MatButtonModule
+  ],
   providers: [
     RatingService,
     SessionService

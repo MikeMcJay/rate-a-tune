@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+h1 {
+  font-size: 40px;
+  line-height: normal;
+}
+h2 {
+  font-size: 25px;
+  line-height: normal;
+}
+h1, h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+p {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  line-height: normal;
+}
+.track {
+  width: 50%;
+}
+.artists {
+  white-space: nowrap;
+  overflow: hidden;
+}
+.tune-info {
+  display: inline-block;
+}
