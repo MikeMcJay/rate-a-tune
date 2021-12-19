@@ -14,7 +14,7 @@ exports.getUser = (app) => {
         try {
             let request = require('request');
             let crudOptions = {
-                uri: 'http://' + 'localhost:3000' + '/readArray/tune/',
+                uri: 'http://' + 'localhost:3000' + '/read/tune',
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,19 +37,20 @@ exports.getRating = (app) => {
         try {
             let request = require('request');
             let crudOptions = {
-                uri: 'http://' + 'localhost:3000' + '/read/tune/' + (trackID),
-                method: 'GET',
+                uri: 'http://' + 'localhost:3000' + '/read/tune',
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
-                }
+                },
+                json: { '_id' : trackID }
             }
             // Needs to calculate the mean rating before sending back
             request(crudOptions, function (error, response) {
-                if (!JSON.parse(response.body.toString())) {
+                if (response.body.length === 0) {
                     res.json(null);
                 } else {
-                    let user = JSON.parse(response.body.toString()).user;
+                    let user = response.body[0].user;
                     let rating = 0;
                     for(let i = 0, l = (user.length); i < l; i++) {
                         rating += user[i].rating;
@@ -71,7 +72,7 @@ exports.updateRating = (app) => {
             let crudOptions = {
                 // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
                 //     '/create/rating',
-                uri: 'http://' + 'localhost:3000' + '/updateArray/tune/',
+                uri: 'http://' + 'localhost:3000' + '/updateArray/tune',
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

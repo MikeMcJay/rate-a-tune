@@ -76,10 +76,11 @@ describe('Database Testing', function () {
         describe('# Finds an item', function () {
             it("should call on the /read route without generating error", function() {
                 // Create the backend read route
-                index.readAll(app);
+                index.read(app);
                 // See if content can be posted to the url
                 request(app)
-                    .get('/read/example')
+                    .post('/read/example')
+                    .send({})
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)

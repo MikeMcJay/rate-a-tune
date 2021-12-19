@@ -50,7 +50,8 @@ export class HomeComponent implements OnInit {
   }
 
   toggleRead() {
-    let obs: Observable<Object> = this.http.get('http://localhost:3000/read/example/' + this.idValue);
+    // Pass an empty body to find all documents
+    let obs: Observable<Object> = this.http.post('http://localhost:3000/read/example/', {}, this.requestOptions);
     obs.subscribe(response => {
       console.log(response)
     });

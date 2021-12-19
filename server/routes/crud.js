@@ -9,32 +9,8 @@ function schemaToUse(schema) {
     }
 }
 
-exports.readAll = (app) => {
-    app.get('/read/:schema', async (req, res) => {
-        let schema = schemaToUse(req.params.schema);
-        const read = await schema.find();
-        try {
-            res.json(read);
-        } catch (error) {
-            res.status(500).send(error);
-        }
-    });
-}
-
-exports.readByID = (app) => {
-    app.get('/read/:schema/:id', async (req, res) => {
-        let schema = schemaToUse(req.params.schema);
-        const read = await schema.findById(req.params.id);
-        try {
-            res.json(read);
-        } catch (error) {
-            res.status(500).send(error);
-        }
-    });
-}
-
-exports.readArray = (app) => {
-    app.post('/readArray/:schema/', async (req, res) => {
+exports.read = (app) => {
+    app.post('/read/:schema/', async (req, res) => {
         let schema = schemaToUse(req.params.schema);
         const read = await schema.find(req.body);
         try {
