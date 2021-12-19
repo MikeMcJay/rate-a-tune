@@ -20,7 +20,7 @@ export class ReviewComponent implements OnInit {
   error: any;
 
   constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
-              private userSession: SessionService) {
+              public userSession: SessionService) {
   }
 
   headerDict = {
