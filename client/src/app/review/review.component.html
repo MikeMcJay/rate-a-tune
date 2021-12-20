@@ -1,36 +1,37 @@
 <div *ngIf="error === null">
-  <div *ngIf="track">
-    <div class="track">
+  <div class="review" *ngIf="track">
       <img src="{{track.album.images[1].url}}"/>
-      <h1>{{track.name}}</h1>
-      <h2 class="tune-info">{{track.album.name}}</h2>
-      <div class="artists">
-        <p class="tune-info" *ngFor="let artist of track.artists; last as isLast;">
-          {{artist.name}}
-          <ng-container *ngIf="!(isLast)">•&nbsp;</ng-container>
-        </p>
+      <div style="text-align: left; margin-left: auto; margin-right: auto; width: 300px;">
+        <h1 >{{track.name}}</h1>
+        <h2 class="tune-info">{{track.album.name}}</h2>
+        <div class="artists">
+          <p class="tune-info" *ngFor="let artist of track.artists; last as isLast;">
+            {{artist.name}}
+            <ng-container *ngIf="!(isLast)">•&nbsp;</ng-container>
+          </p>
+        </div>
       </div>
-    </div>
-    <audio controls>
+
+    <audio controls style="margin-bottom: 10px;">
       <source src="{{track.preview_url}}" type="audio/mp3">
       Your browser does not support the audio element.
     </audio>
-    <h2 *ngIf="trackRating" >{{trackRating}}</h2>
+    <h2 *ngIf="trackRating">{{starCount}} ({{trackRating}})</h2>
     <div>
-      <!-- Contains information the user has submitted -->
-      <ng-container>
-        <input type="number" min="1" max="5" [(ngModel)]="userRating">
-        <button (click)="addTuneRating()">Submit</button>
-      </ng-container>
+      <mat-slider class="rating-bar" (click)="disabledButton = false;" thumbLabel min="1" max="5" step="1" [(ngModel)]="userRating"></mat-slider>
+      <br>
+      <button mat-flat-button [disabled]="disabledButton" class="rating-button" color="accent" (click)="addTuneRating()">Submit Rating</button>
     </div>
-<!--    <br>-->
+
     <!-- Uncomment to delete all ratings of a given song -->
+<!--    <br>-->
 <!--    <button (click)="deleteTuneRating()">Delete</button>-->
 <!--    <br>-->
 <!--    <button (click)="userSession.removeUserSession()">Reset User Session</button>-->
   </div>
 </div>
 
-<div *ngIf="error !== null">
-  <p>There was an error getting your request: {{error}}</p>
+<div *ngIf="error !== null" class="error">
+  <mat-icon style="transform: scale(5); margin-bottom: 50px;">warning</mat-icon>
+  <h1>There was an error getting your request: {{error}}</h1>
 </div>

@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {RatingService} from "../rating.service";
-import {SessionService} from "../session.service";
+import { RatingService } from "../rating.service";
+import { SessionService } from "../session.service";
 
 @Component({
   selector: 'app-review',
@@ -15,9 +15,11 @@ export class ReviewComponent implements OnInit {
 
   track: any = null;
   trackRating: any = null;
+  starCount: any = null;
   userRating: string = '';
   sessionID: any = null;
   error: any;
+  disabledButton: any;
 
   constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
               public userSession: SessionService) {
@@ -36,6 +38,8 @@ export class ReviewComponent implements OnInit {
   ngOnInit() {
     // Reset the error
     this.error = null;
+    // Disable the submit button
+    this.disabledButton = true;
     let routeParamObs: Observable<any> = this.Activatedroute.paramMap;
     // Get the user session
     this.sessionID = this.userSession.getUserSession();
@@ -97,6 +101,8 @@ export class ReviewComponent implements OnInit {
       if (response) {
         let decimalPlaces = 1;
         this.trackRating = Math.trunc(response.rating * Math.pow(10, decimalPlaces)) / Math.pow(10, decimalPlaces);
+        // Create the number of stars to be shown
+        this.starCount = '⭐'.repeat(parseInt(this.trackRating));
         // Check whether the user has a rating to show
         let getUserObs: Observable<any> = this.reviewService.getUserRatings(trackID, this.sessionID);
         getUserObs.subscribe(response => {

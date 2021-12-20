@@ -28,11 +28,13 @@ export class BrowseComponent implements OnInit {
   }
 
   browseSpotify() {
-    let obs: Observable<object> = this.http.get('http://localhost:3000/browse/' + this.searchValue, this.requestOptions);
-    obs.subscribe(response => {
-      // console.log(JSON.parse(response.toString()).tracks);
-      this.searchResult = JSON.parse(response.toString()).tracks;
-    });
+    if (this.searchValue) {
+      let obs: Observable<object> = this.http.get('http://localhost:3000/browse/' + this.searchValue, this.requestOptions);
+      obs.subscribe(response => {
+        // console.log(JSON.parse(response.toString()).tracks);
+        this.searchResult = JSON.parse(response.toString()).tracks;
+      });
+    }
   }
 
 }

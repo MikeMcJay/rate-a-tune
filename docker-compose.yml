@@ -8,7 +8,7 @@ services:
       - "4200:4200"
     container_name: "client"
     # Tag our image with the current build version
-    image: "mikemcjay/rate-a-tune-client:1.4.0"
+    image: "mikemcjay/rate-a-tune-client:1.6.0"
 
   express:
     build: server
@@ -16,7 +16,7 @@ services:
       - "3000:3000"
     container_name: "server"
     # Tag our image with the current build version
-    image: "mikemcjay/rate-a-tune-server:1.4.0"
+    image: "mikemcjay/rate-a-tune-server:1.6.0"
 
   database:
     image: mongo # Pull the latest mongo docker image

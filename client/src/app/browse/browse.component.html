@@ -1,7 +1,17 @@
-<p>Search a tune<input type="text" [(ngModel)]="searchValue"></p>
-<button (click)="browseSpotify()">Search</button>
+<mat-toolbar class="navbar">
+  <form>
+  <mat-form-field appearance="fill" class="search">
+    <mat-label>Search a tune</mat-label>
+    <input matInput id="search" name="search" type="text" required #search="ngModel"
+           (keydown)="browseSpotify()" placeholder="24k magic" [(ngModel)]="searchValue">
+    <mat-error *ngIf="search.errors?.['required']">
+      A search value is required.
+    </mat-error>
+  </mat-form-field>
+  </form>
+</mat-toolbar>
 
-<div *ngIf="searchResult">
+<div class="results" *ngIf="searchResult">
   <div *ngFor="let track of searchResult.items" id="{{track.name}}}" class="track">
     <img src="{{track.album.images[1].url}}"/>
     <a [routerLink]="['/review', track.id]">
