@@ -28,6 +28,7 @@ p {
   text-align: center;
 }
 .artists {
+  /* Keeps elements within .artists in line */
   white-space: nowrap;
   overflow: hidden;
 }
@@ -43,4 +44,7 @@ p {
 .error {
   margin-top: 180px;
   text-align: center;
+}
+.audio {
+  margin-bottom: 10px;
 }

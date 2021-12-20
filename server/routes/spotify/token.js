@@ -1,4 +1,5 @@
 async function getToken() {
+    // Info needed to generate tokens to access the Spotify API
     let client_id = 'bb3cb5d065014eb2bc5fd52ecf009be5';
     let client_secret = 'b673f4d37a374421b00b4a27941638dc';
 

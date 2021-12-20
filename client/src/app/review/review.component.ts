@@ -15,18 +15,26 @@ import { Title } from '@angular/platform-browser';
 })
 export class ReviewComponent implements OnInit {
 
+  // Contains track information as a JSON object
   track: any = null;
+  // The average rating of the track from all users who've rated it
   trackRating: any = null;
+  // A string of star emojis
   starCount: any = null;
+  // The rating the current user has given the track
   userRating: string = '';
+  // The user's session ID
   sessionID: any = null;
+  // Invalid track error
   error: any;
+  // Boolean for the submit button's disabled status
   disabledButton: any;
 
   constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
               public userSession: SessionService, private titleService: Title) {
   }
 
+  // HTTP header
   headerDict = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -38,6 +46,7 @@ export class ReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Set the title of the page
     this.titleService.setTitle('Review');
     // Reset the error
     this.error = null;
@@ -54,6 +63,7 @@ export class ReviewComponent implements OnInit {
   }
 
   deleteTuneRating() {
+    // Delete all user ratings for the given trackID
     let obs: Observable<any> = this.reviewService.deleteRating(this.track.id);
     obs.subscribe(response => {
       // console.log(response);
@@ -66,6 +76,7 @@ export class ReviewComponent implements OnInit {
     getObs.subscribe(response => {
       // Check if a rating has already been left by any user
       if (response === null) {
+        // If no ratings are found (response == null) use the addRating function
         let obs: Observable<any> = this.reviewService.addRating(this.track.id, this.userRating, this.sessionID);
         obs.subscribe(response => {
           // console.log(response);
@@ -130,9 +141,11 @@ export class ReviewComponent implements OnInit {
   }
 
   getSpotifySong(trackID: string) {
+    // Get track information
     let obs: Observable<any> = this.http.get('http://localhost:3000/getSong/' + trackID, this.requestOptions);
     obs.subscribe(
       response => {
+        // If the response has an error field, no song with the trackID passed could be found
         if (JSON.parse(response).error) {
           this.error = JSON.parse(response).error.status;
         } else {

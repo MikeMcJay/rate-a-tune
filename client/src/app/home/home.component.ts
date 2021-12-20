@@ -13,9 +13,9 @@ export class HomeComponent implements OnInit {
   nameValue: string = '';
   idValue: string = '';
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
+  // HTTP header
   headerDict = {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   }
 
   toggleDelete() {
+    // Delete the document in the test database where the id = idValue
     let obs: Observable<object> = this.http.delete('http://localhost:3000/delete/example/' + this.idValue);
     obs.subscribe(response => {
       console.log(response.toString());
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
   }
 
   toggleUpdate() {
+    // Update the document in the test database where the id = idValue
     let obs: Observable<Object> = this.http.patch('http://localhost:3000/update/example/' + this.idValue,
       {username: this.usernameValue, name: this.nameValue}, this.requestOptions);
     obs.subscribe(response => {
@@ -42,6 +44,8 @@ export class HomeComponent implements OnInit {
   }
 
   toggleCreate() {
+    // Create a new document in the test database (with the _id automatically generated) with the JSON body
+    // provided
     let obs: Observable<Object> = this.http.post('http://localhost:3000/create/example',
       {username: this.usernameValue, name: this.nameValue}, this.requestOptions);
     obs.subscribe(response => {

@@ -5,6 +5,7 @@ import { BrowseComponent } from "./browse/browse.component";
 import { ReviewComponent } from "./review/review.component";
 import { NotFoundComponent } from "./not-found/not-found.component";
 
+// Defines what component should be inserted depending on the url path
 const routes: Routes = [
   { path: '', redirectTo: '/browse', pathMatch: 'full' },
   // Uncomment to view the example component made at the start of the project

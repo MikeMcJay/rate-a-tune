@@ -9,6 +9,7 @@ function formatTrackID(trackID) {
 }
 
 exports.getUser = (app) => {
+    // Get user details about the tune they are currently viewing
     app.post('/getUser/:trackID/:uid', async (req, res) => {
         let trackID = formatTrackID(req.params.trackID);
         try {
@@ -32,6 +33,7 @@ exports.getUser = (app) => {
 }
 
 exports.getRating = (app) => {
+    // Get the average rating of the tune
     app.get('/getRating/:trackID', async (req, res) => {
         let trackID = formatTrackID(req.params.trackID);
         try {
@@ -47,6 +49,7 @@ exports.getRating = (app) => {
             }
             // Needs to calculate the mean rating before sending back
             request(crudOptions, function (error, response) {
+                // If the response array of size 0 is returned, no ratings are present
                 if (response.body.length === 0) {
                     res.json(null);
                 } else {
@@ -65,13 +68,12 @@ exports.getRating = (app) => {
 }
 
 exports.updateRating = (app) => {
+    // Update the user's rating of the track
     app.patch('/updateRating/:trackID/:uid', async (req, res) => {
         try {
             let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
-                // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
-                //     '/create/rating',
                 uri: 'http://' + 'localhost:3000' + '/updateArray/tune',
                 method: 'PATCH',
                 headers: {
@@ -104,13 +106,12 @@ exports.updateRating = (app) => {
 }
 
 exports.addRating = (app) => {
+    // Create a new instance of the tune schema, adding info about the first user to rate the track
     app.post('/addRating/:trackID/:uid', async (req, res) => {
         try {
             let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
-                // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
-                //     '/create/rating',
                 uri: 'http://' + 'localhost:3000' + '/create/tune',
                 method: 'POST',
                 headers: {
@@ -127,7 +128,6 @@ exports.addRating = (app) => {
                     }],
                 }
             }
-            // If there are no ratings about this song
             request(crudOptions, function (error, response) {
                 res.json(response.body);
             });
@@ -138,13 +138,13 @@ exports.addRating = (app) => {
 }
 
 exports.insertRating = (app) => {
+    // Push another user's rating of the track to an existing array containing all user ratings
+    // of the given track
     app.patch('/insertRating/:trackID/:uid', async (req, res) => {
         try {
             let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
-                // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
-                //     '/create/rating',
                 uri: 'http://' + 'localhost:3000' + '/update/tune/' + (trackID),
                 method: 'PATCH',
                 headers: {
@@ -172,13 +172,12 @@ exports.insertRating = (app) => {
 }
 
 exports.deleteRating = (app) => {
+    // Delete the track using the trackID
     app.delete('/deleteRating/:trackID', async (req, res) => {
         try {
             let trackID = formatTrackID(req.params.trackID);
             let request = require('request');
             let crudOptions = {
-                // uri: 'http://' + JSON.parse(packageData).serverIPAddress + ':' + JSON.parse(packageData).serverPort +
-                //     '/create/rating',
                 uri: 'http://' + 'localhost:3000' + '/delete/tune/' + (trackID),
                 method: 'DELETE',
                 headers: {

@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
-// This defines a subdocument schema to access user ratings/reviews of songs
-// ratings > tuneID > userID
-// reviews > tuneID > userID
+// This defines a document/sub-document schema to access user ratings/reviews of songs
+// tune (collection) > exampleSong (document) > user (document) > rating/review (fields)
 
 const userSchema = new mongoose.Schema({
     _id: String,

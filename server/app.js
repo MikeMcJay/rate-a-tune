@@ -10,9 +10,10 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Enable Cross Origin for passing data
+// Enable Cross Origin for passing data between the client and server
 app.use(cors({origin: true}));
 
+// Define the url paths that the server will look for
 const crud = require('./routes/crud');
 crud.update(app);
 crud.updateArray(app);

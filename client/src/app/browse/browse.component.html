@@ -1,9 +1,11 @@
 <mat-toolbar class="navbar">
+  <!-- Search form -->
   <form>
   <mat-form-field appearance="fill" class="search">
     <mat-label>Search a tune</mat-label>
     <input matInput id="search" name="search" type="text" required #search="ngModel"
            (keydown)="browseSpotify()" placeholder="24k magic" [(ngModel)]="searchValue">
+    <!-- Flag error if no value is inserted -->
     <mat-error *ngIf="search.errors?.['required']">
       A search value is required.
     </mat-error>
@@ -12,14 +14,18 @@
 </mat-toolbar>
 
 <div class="results" *ngIf="searchResult">
+  <!-- Search through each of the 15 tracks returned -->
   <div *ngFor="let track of searchResult.items" id="{{track.name}}}" class="track">
     <img src="{{track.album.images[1].url}}"/>
+    <!-- Create a route link to apply to the song title, album name and artist that passes through
+         the trackID -->
     <a [routerLink]="['/review', track.id]">
       <h1>{{track.name}}</h1>
       <h2 class="tune-info">{{track.album.name}}</h2>
       <div class="artists">
           <p class="tune-info" *ngFor="let artist of track.artists; last as isLast;">
             {{artist.name}}
+            <!-- Don't append a dot after the last artist -->
             <ng-container *ngIf="!(isLast)">•&nbsp;</ng-container>
           </p>
       </div>

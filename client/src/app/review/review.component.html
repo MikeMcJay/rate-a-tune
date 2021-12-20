@@ -1,4 +1,6 @@
+<!-- Display only if no error is flagged on retrieving the tuneID -->
 <div *ngIf="error === null">
+  <!-- If track information can be found show the review div -->
   <div class="review" *ngIf="track">
       <img src="{{track.album.images[1].url}}"/>
       <div style="text-align: left; margin-left: auto; margin-right: auto; width: 300px;">
@@ -7,23 +9,26 @@
         <div class="artists">
           <p class="tune-info" *ngFor="let artist of track.artists; last as isLast;">
             {{artist.name}}
+            <!-- Don't append a dot after the last artist's name -->
             <ng-container *ngIf="!(isLast)">•&nbsp;</ng-container>
           </p>
         </div>
       </div>
 
-    <audio controls style="margin-bottom: 10px;">
+    <audio controls class="audio">
       <source src="{{track.preview_url}}" type="audio/mp3">
       Your browser does not support the audio element.
     </audio>
     <h2 *ngIf="trackRating">{{starCount}} ({{trackRating}})</h2>
     <div>
+      <!-- Set disabledButton to false on-clicking the slider -->
       <mat-slider class="rating-bar" (click)="disabledButton = false;" thumbLabel min="1" max="5" step="1" [(ngModel)]="userRating"></mat-slider>
       <br>
+      <!-- Keep the submit button disabled whilst disabledButton is true -->
       <button mat-flat-button [disabled]="disabledButton" class="rating-button" color="accent" (click)="addTuneRating()">Submit Rating</button>
     </div>
 
-    <!-- Uncomment to delete all ratings of a given song -->
+    <!-- Uncomment to enable functionality to delete all ratings of the current song being viewed -->
 <!--    <br>-->
 <!--    <button (click)="deleteTuneRating()">Delete</button>-->
 <!--    <br>-->
@@ -31,6 +36,7 @@
   </div>
 </div>
 
+<!-- Display if an invalid trackID is passed -->
 <div *ngIf="error !== null" class="error">
   <mat-icon style="transform: scale(5); margin-bottom: 50px;">warning</mat-icon>
   <h1>There was an error getting your request: {{error}}</h1>
