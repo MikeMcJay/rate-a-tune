@@ -18,9 +18,9 @@
     </audio>
     <h2 *ngIf="trackRating">{{starCount}} ({{trackRating}})</h2>
     <div>
-      <mat-slider class="rating-bar" thumbLabel min="1" max="5" step="1" [(ngModel)]="userRating"></mat-slider>
+      <mat-slider class="rating-bar" (click)="disabledButton = false;" thumbLabel min="1" max="5" step="1" [(ngModel)]="userRating"></mat-slider>
       <br>
-      <button mat-flat-button  class="rating-button" color="accent" (click)="addTuneRating()">Submit Rating</button>
+      <button mat-flat-button [disabled]="disabledButton" class="rating-button" color="accent" (click)="addTuneRating()">Submit Rating</button>
     </div>
 
     <!-- Uncomment to delete all ratings of a given song -->

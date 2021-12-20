@@ -19,6 +19,7 @@ export class ReviewComponent implements OnInit {
   userRating: string = '';
   sessionID: any = null;
   error: any;
+  disabledButton: any;
 
   constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
               public userSession: SessionService) {
@@ -37,6 +38,8 @@ export class ReviewComponent implements OnInit {
   ngOnInit() {
     // Reset the error
     this.error = null;
+    // Disable the submit button
+    this.disabledButton = true;
     let routeParamObs: Observable<any> = this.Activatedroute.paramMap;
     // Get the user session
     this.sessionID = this.userSession.getUserSession();
