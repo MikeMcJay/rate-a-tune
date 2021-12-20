@@ -8,6 +8,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 
+import { Title } from '@angular/platform-browser';
+
 @NgModule({
   declarations: [BrowseComponent],
   imports: [
@@ -24,6 +26,6 @@ import { MatButtonModule } from '@angular/material/button';
     MatInputModule,
     MatButtonModule,
   ],
-  providers: []
+  providers: [Title]
 })
 export class BrowseModule { }

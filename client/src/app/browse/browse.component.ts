@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-browse',
@@ -12,7 +13,7 @@ export class BrowseComponent implements OnInit {
   searchValue: any;
   searchResult: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private titleService: Title) { }
 
   headerDict = {
     'Content-Type': 'application/json',
@@ -25,6 +26,7 @@ export class BrowseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Browse');
   }
 
   browseSpotify() {

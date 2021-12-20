@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 import { RatingService } from "../rating.service";
 import { SessionService } from "../session.service";
 
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
@@ -22,7 +24,7 @@ export class ReviewComponent implements OnInit {
   disabledButton: any;
 
   constructor(private http: HttpClient, private Activatedroute:ActivatedRoute, private reviewService: RatingService,
-              public userSession: SessionService) {
+              public userSession: SessionService, private titleService: Title) {
   }
 
   headerDict = {
@@ -36,6 +38,7 @@ export class ReviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('Review');
     // Reset the error
     this.error = null;
     // Disable the submit button

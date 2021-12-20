@@ -9,6 +9,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
+import { Title } from '@angular/platform-browser';
+
 @NgModule({
   declarations: [ReviewComponent],
   imports: [
@@ -26,7 +28,8 @@ import { MatIconModule } from '@angular/material/icon';
   ],
   providers: [
     RatingService,
-    SessionService
+    SessionService,
+    Title
   ]
 })
 export class ReviewModule { }
