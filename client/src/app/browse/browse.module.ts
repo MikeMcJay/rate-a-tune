@@ -4,14 +4,26 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'
 import { RouterModule } from '@angular/router';
 
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+
 @NgModule({
   declarations: [BrowseComponent],
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
   ],
-  exports: [BrowseComponent],
+  exports: [
+    BrowseComponent,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+  ],
   providers: []
 })
 export class BrowseModule { }
